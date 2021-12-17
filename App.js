@@ -1,24 +1,13 @@
-import 'react-native-gesture-handler';
-import * as React from "react";
-import { View, Text, StatusBar } from "react-native";
-import Navigator from "./src/helpers/navigationHelper/navigationHelper";
-import { Provider } from "./src/redux/provider";
-import SplashScreen from "react-native-splash-screen";
+import React, {Component} from 'react';
+import {View, Text} from 'react-native';
 
-class App extends React.Component {
-  componentDidMount() {
-    SplashScreen.hide();
-  }
+export class App extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <StatusBar animated={true} hidden={true} />
-        <Provider>
-          <Navigator />
-        </Provider>
+      <View>
+        <Text> App </Text>
       </View>
     );
   }
 }
-
 export default App;
