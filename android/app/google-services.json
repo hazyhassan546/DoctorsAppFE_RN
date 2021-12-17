@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "50870339570",
+    "project_id": "doctorapp-5fe2b",
+    "storage_bucket": "doctorapp-5fe2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50870339570:android:8a6a1f7041c90807f84d6b",
+        "android_client_info": {
+          "package_name": "com.doctors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50870339570-bbtmbndjft98u68sj7fjbnuo7nm44nj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doctors",
+            "certificate_hash": "c55055f614368fec17a241531482dc897edc7c08"
+          }
+        },
+        {
+          "client_id": "50870339570-t1gj3srqridaiu513krt9nntgqh9nnro.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTWW35PepU_dHcLjqq48-3FJJxV-Ukvco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50870339570-t1gj3srqridaiu513krt9nntgqh9nnro.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "50870339570-eq7kat6g0kh3euedaldalqknbfjbll3j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.doctors"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
