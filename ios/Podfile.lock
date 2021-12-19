@@ -401,18 +401,18 @@ PODS:
     - React-perflogger (= 0.66.4)
   - RNCClipboard (1.5.1):
     - React-Core
-  - RNFBApp (14.0.1):
+  - RNFBApp (14.1.0):
     - Firebase/CoreOnly (= 8.10.0)
     - React-Core
-  - RNFBAuth (14.0.1):
+  - RNFBAuth (14.1.0):
     - Firebase/Auth (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (14.0.1):
+  - RNFBDatabase (14.1.0):
     - Firebase/Database (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (14.0.1):
+  - RNFBStorage (14.1.0):
     - Firebase/Storage (= 8.10.0)
     - React-Core
     - RNFBApp
@@ -692,10 +692,10 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
   RNCClipboard: 5e299c6df8e0c98f3d7416b86ae563d3a9f768a3
-  RNFBApp: b6eef98aff9bfb2f7c135efee640215f72d718ab
-  RNFBAuth: d6f91ae9dc4330014b90a87ea97910b5dc5adaaf
-  RNFBDatabase: cf714ef2e3b45673db63626d7178de92b8d48c55
-  RNFBStorage: bdb7d18f75b5499a7beebab8e0d1574ab1d0d3b9
+  RNFBApp: e884e9a2dcc5edfa73e2651ef6638df5e0672f89
+  RNFBAuth: fd6cbf93302641dbe20045a44e64c1fa3d4eff02
+  RNFBDatabase: 082aa205ef866f30bc9e7a4f76330087270459d4
+  RNFBStorage: 77eafd785a3a2d4e4ceaac707ebc1abe57537773
   RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNReanimated: da3860204e5660c0dd66739936732197d359d753
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
@@ -703,6 +703,6 @@ SPEC CHECKSUMS:
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 92ebd1d3fedb5b82023cabf99c9648fc71cb443c
+PODFILE CHECKSUM: 94e9d2b52b778838b8ba645545f36af1968148c8
 
 COCOAPODS: 1.11.0
