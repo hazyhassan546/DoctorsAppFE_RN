@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Button, View, SafeAreaView} from 'react-native';
+import {Button, View, SafeAreaView, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
@@ -12,6 +12,11 @@ function HomeScreen({navigation}) {
         onPress={() => navigation.navigate('Notifications')}
         title="Go to notifications"
       />
+      <Text style={{
+        fontFamily:"Poppins-ExtraLightItalic"
+      }}>
+        Hello
+      </Text>
     </View>
   );
 }
