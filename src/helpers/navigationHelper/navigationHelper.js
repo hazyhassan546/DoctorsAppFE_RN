@@ -4,12 +4,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Toast from 'react-native-toast-message';
-
+import SideMenu from './sideMenu';
 /// Drawer screens
 import Home from '../../screens/home';
 
 //// Stack screens out of drawer.
-
+import Welcome from '../../screens/welcome';
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -18,17 +18,17 @@ const Drawer = createDrawerNavigator();
 
 function AppStack() {
   return (
-    <ApplicationStack.Navigator initialRouteName={'WalkThrough'}>
+    <ApplicationStack.Navigator initialRouteName={'Welcome'}>
       <ApplicationStack.Screen
         headerMode="none"
-        name="WalkThrough"
-        component={WalkThrough}
+        name="Welcome"
+        component={Welcome}
         options={{headerShown: false}}
       />
       <ApplicationStack.Screen
         headerMode="none"
-        name="Home"
-        component={Home}
+        name="DrawerMenus"
+        component={DrawerMenus}
         options={{headerShown: false}}
       />
     </ApplicationStack.Navigator>
@@ -36,7 +36,7 @@ function AppStack() {
 }
 
 // this function returns side menu of our app.
-function DrawerMenu() {
+function DrawerMenus() {
   return (
     <Drawer.Navigator
       initialRouteName="DrawerHome"
@@ -49,8 +49,8 @@ function DrawerMenu() {
         return <SideMenu {...props} />;
       }}>
       <Drawer.Screen
-        name="DrawerHome"
-        component={AppStack}
+        name="Home"
+        component={Home}
         headerMode="none"
         options={{headerShown: false}}
       />
@@ -61,7 +61,7 @@ function DrawerMenu() {
 function Navigator() {
   return (
     <NavigationContainer>
-      <DrawerMenu />
+      <AppStack />
       <Toast ref={ref => Toast.setRef(ref)} />
     </NavigationContainer>
   );

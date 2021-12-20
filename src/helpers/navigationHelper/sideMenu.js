@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -7,17 +7,16 @@ import {
   ImageBackground,
   Image,
   Linking,
-} from "react-native";
-import { Icon } from "react-native-elements";
-import COLORS from "../../common/colors";
-import images from "../../common/images";
-import Images from "../../common/images";
-import { commonStyle } from "../../common/styles";
+} from 'react-native';
+import {Icon} from 'react-native-elements';
+import COLORS from '../../common/colors';
+import Images from '../../common/images';
+import {commonStyle} from '../../common/styles';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
-} from "../commonHelpers/helpers";
+} from '../commonHelpers/helpers';
 export default class SideMenu extends Component {
   constructor(props) {
     super(props);
@@ -25,44 +24,44 @@ export default class SideMenu extends Component {
       tabs: [
         {
           id: 0,
-          title: "Home",
-          key: "Home",
-          image: images.homeIcon,
+          title: 'Home',
+          key: 'Home',
+          image: Images.calendar,
           selected: true,
         },
         {
           id: 1,
-          title: "My Favorite",
-          key: "Favorite",
-          image: images.heartIcon,
+          title: 'My Favorite',
+          key: 'Favorite',
+          image: Images.calendar,
           selected: false,
         },
         {
           id: 2,
-          title: "Contact Us",
-          key: "ContactUs",
-          image: images.phoneIcon,
+          title: 'Contact Us',
+          key: 'ContactUs',
+          image: Images.calendar,
           selected: false,
         },
         {
           id: 3,
-          title: "Privacy Policy",
-          key: "PrivacyPolicy",
-          image: images.privacyIcon,
+          title: 'Privacy Policy',
+          key: 'PrivacyPolicy',
+          image: Images.calendar,
           selected: false,
         },
         {
           id: 4,
-          title: "Top Posts",
-          key: "Blogs",
-          image: images.blogs,
+          title: 'Top Posts',
+          key: 'Blogs',
+          image: Images.calendar,
           selected: false,
         },
       ],
     };
   }
 
-  changeTab = (tab) => {
+  changeTab = tab => {
     let Tabs = this.state.tabs;
     Tabs.map((item, index) => {
       if (index == tab.id) {
@@ -80,29 +79,26 @@ export default class SideMenu extends Component {
   render() {
     return (
       <ImageBackground
-        source={Images.sideMenuBackground}
+        source={Images.docBg}
         style={{
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         }}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.closeDrawer();
           }}
-          style={styles.backButton}
-        >
+          style={styles.backButton}>
           <Icon name="arrow-back" type="MaterialIcons" color={COLORS.BLACK} />
         </TouchableOpacity>
 
         <View style={styles.container}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Home")}
-            style={styles.imageContainer}
-          >
+            onPress={() => this.props.navigation.navigate('Home')}
+            style={styles.imageContainer}>
             <View style={styles.buttonStyle}>
-              <Image source={Images.babyImage} style={styles.imageStyle} />
+              <Image source={Images.calendar} style={styles.imageStyle} />
             </View>
           </TouchableOpacity>
           {/* Options Area */}
@@ -111,8 +107,7 @@ export default class SideMenu extends Component {
               <TouchableOpacity
                 key={index}
                 style={styles.tabItemContainer}
-                onPress={() => this.changeTab(item)}
-              >
+                onPress={() => this.changeTab(item)}>
                 <Image source={item.image} style={styles.imageTab} />
                 <Text style={styles.tabText}>{item.title}</Text>
               </TouchableOpacity>
@@ -120,36 +115,35 @@ export default class SideMenu extends Component {
           })}
         </View>
         <View style={styles.bottomView}>
-          <Text style={styles.tabText}>{"Follow Us"}</Text>
+          <Text style={styles.tabText}>{'Follow Us'}</Text>
           <View style={styles.socialImagesArea}>
             <TouchableOpacity
               onPress={() => {
-                Linking.openURL("https://www.facebook.com/babynamemeaningz/");
+                Linking.openURL('https://www.facebook.com/babynamemeaningz/');
               }}
-              style={styles.imageWrap}
-            >
-              <Image source={images.faceBook} style={styles.socialImages} />
+              style={styles.imageWrap}>
+              <Image source={Images.calendar} style={styles.socialImages} />
             </TouchableOpacity>
             <TouchableOpacity
-             onPress={() => {
-              Linking.openURL("https://twitter.com/");
-            }}
-            style={styles.imageWrap}>
-              <Image source={images.twitter} style={styles.socialImages} />
+              onPress={() => {
+                Linking.openURL('https://twitter.com/');
+              }}
+              style={styles.imageWrap}>
+              <Image source={Images.calendar} style={styles.socialImages} />
             </TouchableOpacity>
             <TouchableOpacity
-             onPress={() => {
-              Linking.openURL("https://www.instagram.com/");
-            }}
-            style={styles.imageWrap}>
-              <Image source={images.instagram} style={styles.socialImages} />
+              onPress={() => {
+                Linking.openURL('https://www.instagram.com/');
+              }}
+              style={styles.imageWrap}>
+              <Image source={Images.calendar} style={styles.socialImages} />
             </TouchableOpacity>
             <TouchableOpacity
-             onPress={() => {
-              Linking.openURL("https://pin.it/3DFQ5IW");
-            }}
-            style={styles.imageWrap}>
-              <Image source={images.pint} style={styles.socialImages} />
+              onPress={() => {
+                Linking.openURL('https://pin.it/3DFQ5IW');
+              }}
+              style={styles.imageWrap}>
+              <Image source={Images.calendar} style={styles.socialImages} />
             </TouchableOpacity>
           </View>
         </View>
@@ -165,15 +159,15 @@ const styles = StyleSheet.create({
   tabText: {
     color: COLORS.SIDE_MENU_TEXT,
     fontSize: scaledFontSize(18),
-    fontFamily:"SEGOEUI",
+    fontFamily: 'SEGOEUI',
   },
   socialImagesArea: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: GetOptimalHieght(20),
   },
   tabItemContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: GetOptimalWidth(20),
     paddingVertical: GetOptimalHieght(10),
   },
@@ -187,7 +181,7 @@ const styles = StyleSheet.create({
     width: GetOptimalHieght(30),
     height: GetOptimalHieght(30),
     borderRadius: GetOptimalHieght(20),
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   imageTab: {
     width: GetOptimalHieght(30),
@@ -196,13 +190,13 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: GetOptimalWidth(100),
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: GetOptimalHieght(100),
   },
   backButton: {
     marginTop: GetOptimalHieght(50),
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
     paddingLeft: GetOptimalWidth(20),
   },
   imageStyle: {
@@ -214,11 +208,11 @@ const styles = StyleSheet.create({
     height: GetOptimalHieght(80),
     backgroundColor: COLORS.WHITE,
     borderRadius: GetOptimalHieght(40),
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bottomView: {
     height: GetOptimalHieght(100),
-    alignItems: "center",
+    alignItems: 'center',
   },
 });

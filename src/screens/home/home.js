@@ -1,24 +1,14 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React, { Component } from 'react'
+import { Text, StyleSheet, View } from 'react-native'
 
-export class Home extends Component {
-  static propTypes = {
-    prop: PropTypes,
-  };
-
+export default class home extends Component {
   render() {
     return (
       <View>
-        <Text> prop </Text>
+        <Text> HomeComponent </Text>
       </View>
-    );
+    )
   }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const styles = StyleSheet.create({})

@@ -1,14 +1,14 @@
-const heart = require('../assets/heart-svg.png');
-const confirm = require('../assets/confirm.png');
-const timer = require('../assets/timer.png');
-const monitor = require('../assets/monitor.png');
-const stetho = require('../assets/stetho.png');
-const drop = require('../assets/drop.png');
-const teeth = require('../assets/teeth.png');
-const docBg = require('../assets/doctorBackground.png');
-const calendar = require('../assets/calendar.png');
-const corona = require('../assets/corona.png');
-const doctor = require('../assets/doctor.png');
+const heart = require('../assets/images/heart-svg.png');
+const confirm = require('../assets/images/confirm.png');
+const timer = require('../assets/images/timer.png');
+const monitor = require('../assets/images/monitor.png');
+const stetho = require('../assets/images/stetho.png');
+const drop = require('../assets/images/drop.png');
+const teeth = require('../assets/images/teeth.png');
+const docBg = require('../assets/images/doctorBackground.png');
+const calendar = require('../assets/images/calendar.png');
+const corona = require('../assets/images/corona.png');
+const doctor = require('../assets/images/doctor.png');
 
 export default Images = {
   heart,
