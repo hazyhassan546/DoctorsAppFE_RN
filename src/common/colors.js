@@ -5,6 +5,7 @@ const COLORS = {
   SECONDARY: '#E7FAF9',
   GREEN_FONT: '#FF6A6A',
   PRIMARY_GREY: '#B9B9B9',
+  PRIMARY_TEXT:"#848484"
 };
 
 const lighten = value => {

@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
+import COLORS from '../../common/colors';
 import images from '../../common/images';
 import {commonStyle} from '../../common/styles';
 import Button from '../../components/button';
+import StyledInput from '../../components/styledInput';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
 import styles from './style';
-export default class Welcome extends Component {
+export default class Login extends Component {
   press = () => {
     this.props.navigation.navigate('Login');
   };
@@ -29,27 +31,42 @@ export default class Welcome extends Component {
           style={{
             ...commonStyle.globalTextStyles,
             fontSize: scaledFontSize(24),
+            fontWeight: 'bold',
+            color: COLORS.PRIMARY,
           }}>
-          {'Find Your Doctor'}
+          {'Login'}
         </Text>
         <Text
           style={{
             ...commonStyle.globalTextStyles,
             fontSize: scaledFontSize(12),
-            marginBottom: GetOptimalHieght(80),
+            marginTop: GetOptimalHieght(20),
           }}>
-          {'Get Appointments Easily'}
+          {'Login to your account to get appointments'}
         </Text>
-
-        <Image
-          source={images.doctor}
+        <StyledInput placeholder={'Email'} />
+        <StyledInput placeholder={'Password'} />
+        <Text
           style={{
-            width: GetOptimalWidth(300),
-            height: GetOptimalHieght(360),
-            resizeMode: 'contain',
-          }}
-        />
-        <Button text={'Get Started'} onPress={this.press} />
+            marginBottom: GetOptimalHieght(60),
+            alignSelf: 'flex-end',
+            ...commonStyle.globalTextStyles,
+            fontSize: scaledFontSize(12),
+          }}>
+          Forgot password?
+        </Text>
+        <Button text={'Continue'} onPress={this.press} />
+
+        <Text
+          style={{
+            ...commonStyle.globalTextStyles,
+            fontSize: scaledFontSize(12),
+            marginTop: GetOptimalHieght(20),
+            position: 'absolute',
+            bottom: 20,
+          }}>
+          {"Don't have account? Sign Up Here"}
+        </Text>
       </View>
     );
   }
