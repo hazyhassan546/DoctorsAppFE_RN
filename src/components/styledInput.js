@@ -1,52 +1,94 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TextInput} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import COLORS from '../common/colors';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from '../helpers/commonHelpers/helpers';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class StyledInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hideText: true,
+    };
+  }
+
+  setHideText = () => {
+    this.setState({
+      hideText: !this.state.hideText,
+    });
+  };
+
   render() {
-    const {ref, placeholder, value, onSubmit, onChange, style, inputProps} =
-      this.props;
+    const {
+      ref,
+      placeholder,
+      value,
+      onSubmit,
+      onChange,
+      styleBox,
+      style,
+      iconComponent,
+      type,
+    } = this.props;
+    const {hideText} = this.state;
     return (
-      <View
-        style={[
-          {
-            backgroundColor: COLORS.WHITE,
-            width: GetOptimalWidth(335),
-            marginTop: GetOptimalHieght(20),
-            marginBottom: GetOptimalHieght(10),
-            height: GetOptimalHieght(40),
-            borderRadius: GetOptimalHieght(5),
-            paddingVertical: GetOptimalHieght(10),
-            paddingHorizontal: GetOptimalHieght(20),
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          },
-          style,
-        ]}>
+      <View style={[styles.container, styleBox]}>
         <TextInput
-          {...inputProps}
+          {...this.props}
           ref={this.props.ref}
           placeholder={placeholder ? placeholder : 'Enter Value'}
           value={value}
           onSubmitEditing={onSubmit}
           onChangeText={onChange}
           ref={ref}
-          style={{
-            color: COLORS.PRIMARY,
-            width: '85%',
-            fontSize: scaledFontSize(12),
-          }}
+          secureTextEntry={hideText && type == 'password'}
+          style={[styles.input, style]}
         />
-        <Text>Icon</Text>
+        {type == 'password' ? (
+          hideText ? (
+            <TouchableOpacity onPress={this.setHideText}>
+              <FontAwesome name="lock" size={20} color={COLORS.PRIMARY} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={this.setHideText}>
+              <FontAwesome name="unlock" size={20} color={COLORS.PRIMARY} />
+            </TouchableOpacity>
+          )
+        ) : (
+          iconComponent
+        )}
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLORS.WHITE,
+    width: GetOptimalWidth(335),
+    marginTop: GetOptimalHieght(20),
+    marginBottom: GetOptimalHieght(10),
+    height: GetOptimalHieght(40),
+    borderRadius: GetOptimalHieght(5),
+    paddingVertical: GetOptimalHieght(10),
+    paddingHorizontal: GetOptimalHieght(20),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  input: {
+    color: COLORS.PRIMARY,
+    width: '85%',
+    fontSize: scaledFontSize(12),
+  },
+});

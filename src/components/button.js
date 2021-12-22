@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import COLORS from '../common/colors';
 import {
   GetOptimalHieght,
@@ -10,8 +16,15 @@ import {
 export default class Button extends Component {
   render() {
     return (
-      <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
-        <Text style={styles.fonts}>{this.props.text}</Text>
+      <TouchableOpacity
+        disabled={this.props?.loading}
+        style={styles.button}
+        onPress={this.props.onPress}>
+        {this.props?.loading ? (
+          <ActivityIndicator color={COLORS.SECONDARY} />
+        ) : (
+          <Text style={styles.fonts}>{this.props.text}</Text>
+        )}
       </TouchableOpacity>
     );
   }

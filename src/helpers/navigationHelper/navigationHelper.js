@@ -11,6 +11,7 @@ import Home from '../../screens/home';
 //// Stack screens out of drawer.
 import Welcome from '../../screens/welcome';
 import Login from '../../screens/login';
+import Signup from '../../screens/signup';
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,6 +31,12 @@ function AppStack() {
         headerMode="none"
         name="Login"
         component={Login}
+        options={{headerShown: false}}
+      />
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="Signup"
+        component={Signup}
         options={{headerShown: false}}
       />
       <ApplicationStack.Screen
