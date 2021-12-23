@@ -14,6 +14,9 @@ import {
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
 import styles from './style';
+import DropdownComponent from '../../components/dropDown';
+import * as ImagePicker from 'react-native-image-picker';
+
 export default class Signup extends Component {
   constructor(props) {
     super(props);
@@ -26,22 +29,22 @@ export default class Signup extends Component {
         confirmPassword: '',
         address: '',
         gender: '',
+        image: '',
       },
+      error: '',
     };
   }
 
-  onChangeEmail = text => {
-    this.setState({
-      email: text,
-    });
+  componentDidMount() {
     this.props.setError('');
-  };
-
-  onChangePassword = text => {
+  }
+  onChange = (value, name) => {
     this.setState({
-      password: text,
+      user: {
+        ...this.state.user,
+        [name]: value,
+      },
     });
-    this.props.setError('');
   };
 
   validateEmail = () => {
@@ -70,12 +73,58 @@ export default class Signup extends Component {
     this.login();
   };
 
+  pickImage = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        console.log(response.assets[0].uri);
+        const res = {
+          filePath: response.assets[0],
+          fileData: response.assets[0].data,
+          fileUri: response.assets[0].uri,
+        };
+        this.setState({
+          user: {
+            ...this.state.user,
+            image: res,
+          },
+        });
+      }
+    });
+  };
+
   render() {
-    const {name, phone, email, address, gender, confirmPassword, password} =
-      this.state.user;
+    const {
+      name,
+      phone,
+      email,
+      address,
+      gender,
+      confirmPassword,
+      password,
+      image,
+    } = this.state.user;
     const {error, loading} = this.props.authData;
     return (
-      <ScrollView>
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: COLORS.SECONDARY,
+        }}>
         <View style={styles.container}>
           <Text
             style={{
@@ -95,6 +144,7 @@ export default class Signup extends Component {
             {'Please sign up to your account'}
           </Text>
           <TouchableOpacity
+            onPress={this.pickImage}
             style={{
               width: GetOptimalHieght(100),
               height: GetOptimalHieght(100),
@@ -103,12 +153,28 @@ export default class Signup extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               marginVertical: GetOptimalHieght(20),
+              ...commonStyle.elevatedShadow,
             }}>
-            <FontAwesome5
-              name="image"
-              size={GetOptimalHieght(50)}
-              color={COLORS.PRIMARY}
-            />
+            {image.fileUri ? (
+              <Image
+                source={{
+                  uri: image?.fileUri,
+                }}
+                style={{
+                  width: GetOptimalHieght(100),
+                  height: GetOptimalHieght(100),
+                  resizeMode: 'cover',
+                  borderRadius: GetOptimalHieght(50),
+                }}
+              />
+            ) : (
+              <FontAwesome5
+                name="image"
+                size={GetOptimalHieght(50)}
+                color={COLORS.PRIMARY}
+              />
+            )}
+
             <Text
               style={{
                 ...commonStyle.globalTextStyles,
@@ -124,28 +190,28 @@ export default class Signup extends Component {
           <StyledInput
             name={'name'}
             placeholder={'Name'}
-            onChange={this.onChangeEmail}
+            onChange={text => this.onChange(text, 'name')}
             value={name}
             iconComponent={null}
           />
           <StyledInput
             name={'email'}
             placeholder={'Email'}
-            onChange={this.onChangeEmail}
+            onChange={text => this.onChange(text, 'email')}
             value={email}
             iconComponent={null}
           />
           <StyledInput
             name={'phone'}
             placeholder={'Phone no'}
-            onChange={this.onChangeEmail}
+            onChange={text => this.onChange(text, 'phone')}
             value={phone}
             iconComponent={null}
           />
           <StyledInput
             name={'password'}
             placeholder={'Password'}
-            onChange={this.onChangeEmail}
+            onChange={text => this.onChange(text, 'password')}
             value={password}
             type={'password'}
             iconComponent={null}
@@ -153,10 +219,23 @@ export default class Signup extends Component {
           <StyledInput
             name={'confirmPassword'}
             placeholder={'Confirm Password'}
-            onChange={this.onChangeEmail}
+            onChange={text => this.onChange(text, 'confirmPassword')}
             value={confirmPassword}
             type={'password'}
             iconComponent={null}
+          />
+          <StyledInput
+            name={'address'}
+            placeholder={'Address'}
+            onChange={text => this.onChange(text, 'address')}
+            value={address}
+            iconComponent={
+              <Ionicons name="location" size={20} color={COLORS.PRIMARY} />
+            }
+          />
+          <DropdownComponent
+            value={gender}
+            onChange={text => this.onChange(text, 'gender')}
           />
           <Button text={'Continue'} onPress={this.validate} loading={loading} />
           <Text
@@ -164,7 +243,7 @@ export default class Signup extends Component {
               ...commonStyle.globalTextStyles,
               fontSize: scaledFontSize(12),
               color: COLORS.RED,
-              marginTop: GetOptimalHieght(20),
+              marginTop: GetOptimalHieght(10),
             }}>
             {error ? error : ''}
           </Text>
@@ -174,10 +253,10 @@ export default class Signup extends Component {
               fontSize: scaledFontSize(12),
               marginTop: GetOptimalHieght(10),
             }}>
-            {"Don't have account? "}
+            {'Already have an account? '}
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('Signup');
+                this.props.navigation.navigate('Login');
               }}>
               <Text
                 style={{
@@ -185,7 +264,7 @@ export default class Signup extends Component {
                   fontSize: scaledFontSize(12),
                   fontWeight: 'bold',
                 }}>
-                {'Sign Up Here'}
+                {' Login'}
               </Text>
             </TouchableOpacity>
           </Text>

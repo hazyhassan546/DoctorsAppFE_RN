@@ -13,6 +13,7 @@ import {
   scaledFontSize,
 } from '../helpers/commonHelpers/helpers';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {commonStyle} from '../common/styles';
 
 export default class StyledInput extends Component {
   constructor(props) {
@@ -74,6 +75,7 @@ export default class StyledInput extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    ...commonStyle.elevatedShadow,
     backgroundColor: COLORS.WHITE,
     width: GetOptimalWidth(335),
     marginTop: GetOptimalHieght(20),

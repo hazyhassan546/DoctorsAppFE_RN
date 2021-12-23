@@ -8,8 +8,8 @@ export const commonStyle = StyleSheet.create({
   elevatedShadow: {
     shadowColor: alpha(COLORS.BLACK, 0.4),
     shadowOffset: {width: 1, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
     elevation: SHADOW_SIZE,
   },
   globalTextStyles: {

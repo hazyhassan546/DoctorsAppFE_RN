@@ -4,7 +4,6 @@ import {GetOptimalHieght} from '../../helpers/commonHelpers/helpers';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
     alignItems: 'center',
     backgroundColor: COLORS.SECONDARY,
     padding: GetOptimalHieght(20),

@@ -12,6 +12,10 @@ import Home from '../../screens/home';
 import Welcome from '../../screens/welcome';
 import Login from '../../screens/login';
 import Signup from '../../screens/signup';
+import ForgetPassword from '../../screens/forgetPassword';
+import DoctorListing from '../../screens/doctorListing';
+import DoctorDetail from '../../screens/doctorDetail';
+import Dashboard from '../../screens/dashboard';
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,6 +37,34 @@ function AppStack() {
         component={Login}
         options={{headerShown: false}}
       />
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="ForgetPassword"
+        component={ForgetPassword}
+        options={{headerShown: false}}
+      />
+
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="DoctorListing"
+        component={DoctorListing}
+        options={{headerShown: false}}
+      />
+
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="DoctorDetail"
+        component={DoctorDetail}
+        options={{headerShown: false}}
+      />
+
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="Dashboard"
+        component={Dashboard}
+        options={{headerShown: false}}
+      />
+
       <ApplicationStack.Screen
         headerMode="none"
         name="Signup"

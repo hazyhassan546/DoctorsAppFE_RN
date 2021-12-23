@@ -12,7 +12,7 @@ import {
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
 import styles from './style';
-export default class Login extends Component {
+export default class DoctorDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {

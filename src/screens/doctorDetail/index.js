@@ -1,3 +1,3 @@
 import {authConnect} from '../../redux/connectors/authConnect';
-import Login from './Login';
-export default authConnect()(Login);
+import DoctorDetail from './DoctorDetail';
+export default authConnect()(DoctorDetail);

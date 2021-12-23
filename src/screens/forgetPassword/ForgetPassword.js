@@ -12,7 +12,7 @@ import {
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
 import styles from './style';
-export default class Login extends Component {
+export default class ForgetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,7 +82,7 @@ export default class Login extends Component {
             fontWeight: 'bold',
             color: COLORS.PRIMARY,
           }}>
-          {'Login'}
+          {'Forget Password'}
         </Text>
         <Text
           style={{
@@ -113,9 +113,6 @@ export default class Login extends Component {
           type={'password'}
         />
         <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate('ForgetPassword');
-          }}
           style={{
             marginBottom: GetOptimalHieght(60),
             width: '100%',
@@ -126,7 +123,7 @@ export default class Login extends Component {
               ...commonStyle.globalTextStyles,
               fontSize: scaledFontSize(12),
             }}>
-            {'Forgot password?'}
+            Forgot password?
           </Text>
         </TouchableOpacity>
         <Button text={'Continue'} onPress={this.validate} loading={loading} />
