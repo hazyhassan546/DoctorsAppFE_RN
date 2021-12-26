@@ -21,6 +21,15 @@ export default class Login extends Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.authData.loginSuccess == true &&
+      prevProps.authData.loginSuccess == false
+    ) {
+      this.props.navigation.navigate('Dashboard');
+    }
+  }
+
   onChangeEmail = text => {
     this.setState({
       email: text,

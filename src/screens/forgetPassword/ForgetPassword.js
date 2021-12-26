@@ -6,31 +6,33 @@ import {commonStyle} from '../../common/styles';
 import Button from '../../components/button';
 import StyledInput from '../../components/styledInput';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import auth from '@react-native-firebase/auth';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
 import styles from './style';
+import Toast from 'react-native-toast-message';
 export default class ForgetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: '',
     };
+  }
+
+  componentDidMount() {
+    this.props.setError('');
+  }
+
+  componentWillUnmount() {
+    this.props.setError('');
   }
 
   onChangeEmail = text => {
     this.setState({
       email: text,
-    });
-    this.props.setError('');
-  };
-
-  onChangePassword = text => {
-    this.setState({
-      password: text,
     });
     this.props.setError('');
   };
@@ -41,24 +43,29 @@ export default class ForgetPassword extends Component {
     return reg.test(text);
   };
 
-  login = () => {
-    const {email, password, error} = this.state;
-    this.props.loginUser({
-      email: email,
-      password: password,
-    });
+  sendPasswordLink = async () => {
+    const {email} = this.state;
+    await auth()
+      .sendPasswordResetEmail(email)
+      .then(function (user) {
+        Toast.show({
+          type: 'success',
+          text1: 'Please check your email.',
+        });
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+    this.props.navigation.goBack();
   };
 
   validate = () => {
-    const {email, password, error} = this.state;
+    const {email} = this.state;
     if (email === '' || !this.validateEmail()) {
       this.props.setError('Email is not valid');
       return;
-    } else if (password === '' || password?.length < 8) {
-      this.props.setError('Password not valid, minimum 8 characters required');
-      return;
     }
-    this.login();
+    this.sendPasswordLink();
   };
 
   render() {
@@ -90,8 +97,9 @@ export default class ForgetPassword extends Component {
             fontSize: scaledFontSize(12),
             marginTop: GetOptimalHieght(20),
           }}>
-          {'Login to your account to get appointments'}
+          {'Enter your email id to reset password'}
         </Text>
+        <View style={{marginTop: 30}}></View>
         <StyledInput
           name={'email'}
           placeholder={'Email'}
@@ -105,28 +113,12 @@ export default class ForgetPassword extends Component {
             />
           }
         />
-        <StyledInput
-          onChange={this.onChangePassword}
-          name={'password'}
-          value={password}
-          placeholder={'Password'}
-          type={'password'}
+        <View style={{marginTop: 30}}></View>
+        <Button
+          text={'Send Password Reset Link'}
+          onPress={this.validate}
+          loading={loading}
         />
-        <TouchableOpacity
-          style={{
-            marginBottom: GetOptimalHieght(60),
-            width: '100%',
-          }}>
-          <Text
-            style={{
-              alignSelf: 'flex-end',
-              ...commonStyle.globalTextStyles,
-              fontSize: scaledFontSize(12),
-            }}>
-            Forgot password?
-          </Text>
-        </TouchableOpacity>
-        <Button text={'Continue'} onPress={this.validate} loading={loading} />
         <Text
           style={{
             ...commonStyle.globalTextStyles,
@@ -144,10 +136,10 @@ export default class ForgetPassword extends Component {
             position: 'absolute',
             bottom: 20,
           }}>
-          {"Don't have account? "}
+          {''}
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('Signup');
+              this.props.navigation.goBack();
             }}>
             <Text
               style={{
@@ -155,7 +147,7 @@ export default class ForgetPassword extends Component {
                 fontSize: scaledFontSize(12),
                 fontWeight: 'bold',
               }}>
-              {'Sign Up Here'}
+              {'< Login'}
             </Text>
           </TouchableOpacity>
         </Text>

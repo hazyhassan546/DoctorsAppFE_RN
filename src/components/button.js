@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     width: GetOptimalWidth(335),
     height: GetOptimalHieght(43),
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: COLORS.PRIMARY,
     display: 'flex',
     justifyContent: 'center',

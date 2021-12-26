@@ -38,6 +38,19 @@ export default class Signup extends Component {
   componentDidMount() {
     this.props.setError('');
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.authData.signUpSuccess == true &&
+      prevProps.authData.signUpSuccess == false
+    ) {
+      this.props.navigation.navigate('Login');
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.setError('');
+  }
   onChange = (value, name) => {
     this.setState({
       user: {
@@ -48,29 +61,54 @@ export default class Signup extends Component {
   };
 
   validateEmail = () => {
-    const text = this.state.email;
+    const text = this.state.user.email;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     return reg.test(text);
   };
 
-  login = () => {
-    const {email, password, error} = this.state;
-    this.props.loginUser({
-      email: email,
-      password: password,
-    });
+  signUp = () => {
+    this.props.signupUser(this.state.user);
   };
 
   validate = () => {
-    const {email, password, error} = this.state;
-    if (email === '' || !this.validateEmail()) {
+    const {
+      name,
+      phone,
+      email,
+      address,
+      gender,
+      confirmPassword,
+      password,
+      image,
+    } = this.state.user;
+
+    if (image === '') {
+      this.props.setError('Profile picture is required');
+      return;
+    } else if (name === '') {
+      this.props.setError('Name is required');
+      return;
+    } else if (email === '' || !this.validateEmail()) {
       this.props.setError('Email is not valid');
+      return;
+    } else if (phone === '') {
+      this.props.setError('Phone is required');
       return;
     } else if (password === '' || password?.length < 8) {
       this.props.setError('Password not valid, minimum 8 characters required');
       return;
+    } else if (confirmPassword === '' || confirmPassword !== password) {
+      this.props.setError('Password do not match');
+      return;
+    } else if (address === '') {
+      this.props.setError('Address is required');
+      return;
+    } else if (gender === '') {
+      this.props.setError('Gender is required');
+      return;
     }
-    this.login();
+    this.props.setError('');
+    this.signUp();
   };
 
   pickImage = () => {
@@ -144,6 +182,7 @@ export default class Signup extends Component {
             {'Please sign up to your account'}
           </Text>
           <TouchableOpacity
+            disabled={loading}
             onPress={this.pickImage}
             style={{
               width: GetOptimalHieght(100),
@@ -193,20 +232,25 @@ export default class Signup extends Component {
             onChange={text => this.onChange(text, 'name')}
             value={name}
             iconComponent={null}
+            editable={!loading}
           />
           <StyledInput
             name={'email'}
             placeholder={'Email'}
             onChange={text => this.onChange(text, 'email')}
             value={email}
+            keyboardType={'email-address'}
             iconComponent={null}
+            editable={!loading}
           />
           <StyledInput
             name={'phone'}
             placeholder={'Phone no'}
             onChange={text => this.onChange(text, 'phone')}
             value={phone}
+            keyboardType={'number-pad'}
             iconComponent={null}
+            editable={!loading}
           />
           <StyledInput
             name={'password'}
@@ -215,6 +259,7 @@ export default class Signup extends Component {
             value={password}
             type={'password'}
             iconComponent={null}
+            editable={!loading}
           />
           <StyledInput
             name={'confirmPassword'}
@@ -223,12 +268,14 @@ export default class Signup extends Component {
             value={confirmPassword}
             type={'password'}
             iconComponent={null}
+            editable={!loading}
           />
           <StyledInput
             name={'address'}
             placeholder={'Address'}
             onChange={text => this.onChange(text, 'address')}
             value={address}
+            editable={!loading}
             iconComponent={
               <Ionicons name="location" size={20} color={COLORS.PRIMARY} />
             }

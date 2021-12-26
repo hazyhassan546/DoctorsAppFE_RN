@@ -82,7 +82,7 @@ export default class Dashboard extends Component {
             fontWeight: 'bold',
             color: COLORS.PRIMARY,
           }}>
-          {'Login'}
+          {'Dashboard'}
         </Text>
         <Text
           style={{
@@ -145,9 +145,10 @@ export default class Dashboard extends Component {
             bottom: 20,
           }}>
           {"Don't have account? "}
-          <TouchableOpacity onPress={()=>{
-            this.props.navigation.navigate("Signup")
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Signup');
+            }}>
             <Text
               style={{
                 ...commonStyle.globalTextStyles,
