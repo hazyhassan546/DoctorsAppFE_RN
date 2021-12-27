@@ -24,7 +24,13 @@ const Drawer = createDrawerNavigator();
 
 function AppStack() {
   return (
-    <ApplicationStack.Navigator initialRouteName={'Welcome'}>
+    <ApplicationStack.Navigator>
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="Dashboard"
+        component={Dashboard}
+        options={{headerShown: false}}
+      />
       <ApplicationStack.Screen
         headerMode="none"
         name="Welcome"
@@ -55,13 +61,6 @@ function AppStack() {
         headerMode="none"
         name="DoctorDetail"
         component={DoctorDetail}
-        options={{headerShown: false}}
-      />
-
-      <ApplicationStack.Screen
-        headerMode="none"
-        name="Dashboard"
-        component={Dashboard}
         options={{headerShown: false}}
       />
 
