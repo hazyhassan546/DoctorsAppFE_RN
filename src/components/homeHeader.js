@@ -35,11 +35,7 @@ class HomeHeader extends Component {
           <TouchableOpacity
             onPress={this.props.onBackPress}
             style={[styles.touchableHide]}>
-            <Icon
-              name="arrow-back"
-              type="MaterialIcons"
-              color={COLORS.PRIMARY}
-            />
+            <Icon name="bell" type="feather" color={COLORS.PRIMARY} />
           </TouchableOpacity>
         </View>
         <Text style={[styles.title, {color: COLORS.PRIMARY}]}>
