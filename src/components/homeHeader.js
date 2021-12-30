@@ -27,13 +27,13 @@ class HomeHeader extends Component {
         }}>
         <View style={styles.container}>
           <TouchableOpacity
-            onPress={this.props.onBackPress}
+            onPress={this.props.onMenuPress}
             style={[styles.touchableHide]}>
             <Icon name="menu" type="MaterialIcons" color={COLORS.PRIMARY} />
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={this.props.onBackPress}
+            onPress={this.props.onBellPress}
             style={[styles.touchableHide]}>
             <Icon name="bell" type="feather" color={COLORS.PRIMARY} />
           </TouchableOpacity>

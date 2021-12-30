@@ -10,7 +10,18 @@ const calendar = require('../assets/images/calendar.png');
 const corona = require('../assets/images/corona.png');
 const doctor = require('../assets/images/doctor.png');
 
+const logout = require('../assets/images/logout.png');
+const home = require('../assets/images/homeIcon.png');
+const calendarIcon = require('../assets/images/calendarIcon.png');
+const person = require('../assets/images/person.png');
+const setting = require('../assets/images/setting.png');
+
 export default Images = {
+  logout,
+  home,
+  calendarIcon,
+  person,
+  setting,
   heart,
   confirm,
   timer,

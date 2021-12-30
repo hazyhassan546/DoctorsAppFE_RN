@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -8,10 +8,11 @@ import {
   Image,
   Linking,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import COLORS from '../../common/colors';
+import images from '../../common/images';
 import Images from '../../common/images';
-import {commonStyle} from '../../common/styles';
+import { commonStyle } from '../../common/styles';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
@@ -26,37 +27,31 @@ export default class SideMenu extends Component {
           id: 0,
           title: 'Home',
           key: 'Home',
-          image: Images.calendar,
+          image: images.home,
           selected: true,
         },
         {
           id: 1,
-          title: 'My Favorite',
-          key: 'Favorite',
-          image: Images.calendar,
+          title: 'Recent Appointments',
+          key: 'History',
+          image: images.calendarIcon,
           selected: false,
         },
         {
           id: 2,
-          title: 'Contact Us',
-          key: 'ContactUs',
-          image: Images.calendar,
+          title: 'Profile',
+          key: 'Profile',
+          image: images.person,
           selected: false,
         },
         {
           id: 3,
-          title: 'Privacy Policy',
-          key: 'PrivacyPolicy',
-          image: Images.calendar,
+          title: 'Account Setting',
+          key: 'Setting',
+          image: images.setting,
           selected: false,
         },
-        {
-          id: 4,
-          title: 'Top Posts',
-          key: 'Blogs',
-          image: Images.calendar,
-          selected: false,
-        },
+
       ],
     };
   }
@@ -78,29 +73,60 @@ export default class SideMenu extends Component {
 
   render() {
     return (
-      <ImageBackground
-        source={Images.docBg}
+      <View
         style={{
           width: '100%',
           height: '100%',
         }}
-        resizeMode="cover">
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.closeDrawer();
+      >
+        <View
+          style={{
+            width: '100%',
+            backgroundColor: COLORS.SECONDARY,
           }}
-          style={styles.backButton}>
-          <Icon name="arrow-back" type="MaterialIcons" color={COLORS.BLACK} />
-        </TouchableOpacity>
+        >
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.closeDrawer();
+            }}
+            style={styles.backButton}>
+            <Icon name="cross" type="entypo" size={GetOptimalHieght(20)} color={COLORS.PRIMARY} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              padding: GetOptimalHieght(20)
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Home')}
+              style={styles.imageContainer}>
+              <View style={styles.buttonStyle}>
+                <Image source={images.doctor} style={styles.imageStyle} resizeMode="contain" />
+              </View>
+              <View
+                style={{
+                  marginLeft: GetOptimalWidth(10)
+                }}
+              >
+                <Text
+                  numberOfLines={2}
+                  style={[commonStyle.globalTextStyles, {
+                    fontSize: scaledFontSize(16),
+                    fontWeight: "bold",
+                    width: GetOptimalWidth(160),
+                    color: COLORS.PRIMARY
+
+                  }]}>{"Sophie Garnier"}</Text>
+                <Text style={[commonStyle.globalTextStyles, {
+                  fontSize: scaledFontSize(14)
+                }]}>{"Luxembourg"}</Text>
+              </View>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.container}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Home')}
-            style={styles.imageContainer}>
-            <View style={styles.buttonStyle}>
-              <Image source={Images.calendar} style={styles.imageStyle} />
-            </View>
-          </TouchableOpacity>
           {/* Options Area */}
           {this.state.tabs.map((item, index) => {
             return (
@@ -115,39 +141,19 @@ export default class SideMenu extends Component {
           })}
         </View>
         <View style={styles.bottomView}>
-          <Text style={styles.tabText}>{'Follow Us'}</Text>
+
           <View style={styles.socialImagesArea}>
             <TouchableOpacity
               onPress={() => {
-                Linking.openURL('https://www.facebook.com/babynamemeaningz/');
               }}
               style={styles.imageWrap}>
-              <Image source={Images.calendar} style={styles.socialImages} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL('https://twitter.com/');
-              }}
-              style={styles.imageWrap}>
-              <Image source={Images.calendar} style={styles.socialImages} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL('https://www.instagram.com/');
-              }}
-              style={styles.imageWrap}>
-              <Image source={Images.calendar} style={styles.socialImages} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL('https://pin.it/3DFQ5IW');
-              }}
-              style={styles.imageWrap}>
-              <Image source={Images.calendar} style={styles.socialImages} />
+              <Image source={images.logout} style={styles.socialImages} />
+              <Text style={styles.tabText}>{'Logout'}</Text>
+
             </TouchableOpacity>
           </View>
         </View>
-      </ImageBackground>
+      </View>
     );
   }
 }
@@ -159,60 +165,66 @@ const styles = StyleSheet.create({
   tabText: {
     color: COLORS.SIDE_MENU_TEXT,
     fontSize: scaledFontSize(18),
-    fontFamily: 'SEGOEUI',
+    ...commonStyle.globalTextStyles,
+    fontWeight: "500"
   },
   socialImagesArea: {
     flexDirection: 'row',
+    alignSelf: "flex-start",
     marginTop: GetOptimalHieght(20),
   },
   tabItemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: GetOptimalWidth(20),
-    paddingVertical: GetOptimalHieght(10),
+    marginHorizontal: GetOptimalWidth(20),
+    paddingVertical: GetOptimalHieght(20),
+    borderBottomWidth: 0.4,
+    borderColor: COLORS.PRIMARY
   },
   imageWrap: {
     padding: GetOptimalHieght(5),
     borderRadius: GetOptimalHieght(20),
-    marginHorizontal: GetOptimalWidth(5),
+    marginHorizontal: GetOptimalWidth(25),
+    flexDirection: "row",
     //...commonStyle.elevatedShadow,
   },
   socialImages: {
-    width: GetOptimalHieght(30),
-    height: GetOptimalHieght(30),
-    borderRadius: GetOptimalHieght(20),
+    width: GetOptimalHieght(20),
+    height: GetOptimalHieght(20),
+    marginRight: GetOptimalWidth(10),
     resizeMode: 'contain',
   },
   imageTab: {
-    width: GetOptimalHieght(30),
-    height: GetOptimalHieght(30),
+    width: GetOptimalHieght(15),
+    height: GetOptimalHieght(15),
     marginRight: GetOptimalWidth(15),
+    resizeMode: "contain"
   },
   imageContainer: {
-    height: GetOptimalWidth(100),
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: GetOptimalHieght(100),
+    flexDirection: 'row',
+    alignItems: "center"
   },
   backButton: {
-    marginTop: GetOptimalHieght(50),
-    alignItems: 'flex-start',
-    paddingLeft: GetOptimalWidth(20),
+    marginTop: GetOptimalHieght(20),
+    alignItems: 'flex-end',
+    paddingRight: GetOptimalWidth(20),
   },
   imageStyle: {
-    width: GetOptimalHieght(63),
-    height: GetOptimalHieght(63),
+    width: GetOptimalHieght(60),
+    height: GetOptimalHieght(60),
+    borderRadius: GetOptimalHieght(40),
   },
   buttonStyle: {
-    width: GetOptimalHieght(80),
-    height: GetOptimalHieght(80),
+    width: GetOptimalHieght(60),
+    height: GetOptimalHieght(60),
     backgroundColor: COLORS.WHITE,
     borderRadius: GetOptimalHieght(40),
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   bottomView: {
-    height: GetOptimalHieght(100),
+    height: GetOptimalHieght(80),
     alignItems: 'center',
   },
 });

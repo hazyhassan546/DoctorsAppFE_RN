@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import Toast from 'react-native-toast-message';
 import SideMenu from './sideMenu';
 /// Drawer screens
@@ -16,65 +16,68 @@ import ForgetPassword from '../../screens/forgetPassword';
 import DoctorListing from '../../screens/doctorListing';
 import DoctorDetail from '../../screens/doctorDetail';
 import Dashboard from '../../screens/dashboard';
+import { AsyncStorage } from 'react-native';
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 // App extra screens stack
 
-function AppStack() {
+function AuthStack() {
   return (
     <ApplicationStack.Navigator>
-      <ApplicationStack.Screen
-        headerMode="none"
-        name="Dashboard"
-        component={Dashboard}
-        options={{headerShown: false}}
-      />
+
+    </ApplicationStack.Navigator>);
+}
+
+function AppStack() {
+  const initialRouteName = AsyncStorage.getItem("user") ? "DrawerMenus" : "Welcome";
+  return (
+    <ApplicationStack.Navigator initialRouteName={initialRouteName}>
       <ApplicationStack.Screen
         headerMode="none"
         name="Welcome"
         component={Welcome}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
+
       <ApplicationStack.Screen
         headerMode="none"
         name="Login"
         component={Login}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <ApplicationStack.Screen
         headerMode="none"
         name="ForgetPassword"
         component={ForgetPassword}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="Signup"
+        component={Signup}
+        options={{ headerShown: false }}
+      />
       <ApplicationStack.Screen
         headerMode="none"
         name="DoctorListing"
         component={DoctorListing}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <ApplicationStack.Screen
         headerMode="none"
         name="DoctorDetail"
         component={DoctorDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <ApplicationStack.Screen
         headerMode="none"
-        name="Signup"
-        component={Signup}
-        options={{headerShown: false}}
-      />
-      <ApplicationStack.Screen
-        headerMode="none"
         name="DrawerMenus"
         component={DrawerMenus}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </ApplicationStack.Navigator>
   );
@@ -84,7 +87,7 @@ function AppStack() {
 function DrawerMenus() {
   return (
     <Drawer.Navigator
-      initialRouteName="DrawerHome"
+      initialRouteName="Dashboard"
       drawerType="slide"
       overlayColor="transparent"
       drawerStyle={{
@@ -93,11 +96,11 @@ function DrawerMenus() {
       drawerContent={props => {
         return <SideMenu {...props} />;
       }}>
-      <Drawer.Screen
-        name="Home"
-        component={Home}
+      <ApplicationStack.Screen
         headerMode="none"
-        options={{headerShown: false}}
+        name="Dashboard"
+        component={Dashboard}
+        options={{ headerShown: false }}
       />
     </Drawer.Navigator>
   );

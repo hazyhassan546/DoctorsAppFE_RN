@@ -58,6 +58,7 @@ export default class AppointmentCard extends Component {
               style={{
                 ...commonStyle.globalTextStyles,
                 fontSize: scaledFontSize(16),
+                color: '#1c1c1c',
               }}>
               - Dentist
             </Text>
@@ -71,7 +72,7 @@ export default class AppointmentCard extends Component {
               style={{
                 ...commonStyle.globalTextStyles,
                 fontSize: scaledFontSize(24),
-                color: '#ICICIC',
+                color: '#1c1c1c',
               }}>
               Thu, 09 Apr
             </Text>

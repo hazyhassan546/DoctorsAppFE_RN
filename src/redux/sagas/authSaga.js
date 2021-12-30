@@ -1,14 +1,16 @@
-import {all, take, call, put, fork} from 'redux-saga/effects';
-import {authActionCreator} from '../actions/auth.actions';
-import {LoginApi, SignUpApi} from '../Api/apiCalls';
-import {LOGIN, SIGNUP} from '../types/auth.types';
+import { all, take, call, put, fork } from 'redux-saga/effects';
+import { authActionCreator } from '../actions/auth.actions';
+import { LoginApi, SignUpApi } from '../Api/apiCalls';
+import { LOGIN, SIGNUP } from '../types/auth.types';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
+import { AsyncStorage } from 'react-native';
 
-function* loginSaga({payload}) {
+function* loginSaga({ payload }) {
   try {
     const response = yield call(LoginApi, payload);
+    yield AsyncStorage.setItem("user", JSON.stringify(response.user))
     yield put(authActionCreator.loginUserSuccess(response.user));
   } catch (err) {
     console.log(err);
@@ -23,7 +25,7 @@ function* loginSaga({payload}) {
   }
 }
 
-function* signUpSaga({payload}) {
+function* signUpSaga({ payload }) {
   try {
     // it will give us a user with a account created at firebase
     const response = yield call(SignUpApi, payload);
