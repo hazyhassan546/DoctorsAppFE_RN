@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,13 +8,13 @@ import {
   Platform,
 } from 'react-native';
 import COLORS from '../common/colors';
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from '../helpers/commonHelpers/helpers';
-import {commonStyle} from '../common/styles';
+import { commonStyle } from '../common/styles';
 
 class HomeHeader extends Component {
   render() {
@@ -23,6 +23,7 @@ class HomeHeader extends Component {
         style={{
           backgroundColor: COLORS.WHITE,
           paddingVertical: GetOptimalHieght(10),
+          paddingTop: GetOptimalHieght(45),
           paddingHorizontal: GetOptimalWidth(20),
         }}>
         <View style={styles.container}>
@@ -38,7 +39,7 @@ class HomeHeader extends Component {
             <Icon name="bell" type="feather" color={COLORS.PRIMARY} />
           </TouchableOpacity>
         </View>
-        <Text style={[styles.title, {color: COLORS.PRIMARY}]}>
+        <Text style={[styles.title, { color: COLORS.PRIMARY }]}>
           {'Hello, '}
           <Text style={styles.title}>{'Hassan!'}</Text>
         </Text>

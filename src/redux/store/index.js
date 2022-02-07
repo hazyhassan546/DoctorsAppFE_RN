@@ -1,11 +1,11 @@
 //  @flow
 
-import {compact} from 'lodash';
-import {applyMiddleware, compose, createStore} from 'redux';
-import {persistReducer, persistStore} from 'redux-persist';
+import { compact } from 'lodash';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
 // import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import createSagaMiddleware from 'redux-saga';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import rootReducer from '../reducers';
 import sagas from '../sagas';
 
@@ -13,7 +13,7 @@ import sagas from '../sagas';
 export const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['namesData'],
+  whitelist: ['authData'],
 };
 
 const sagaMiddleware = createSagaMiddleware();
@@ -33,4 +33,4 @@ let persistor = persistStore(store);
 
 sagaMiddleware.run(sagas);
 
-export {store, persistor};
+export { store, persistor };

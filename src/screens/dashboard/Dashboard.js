@@ -55,7 +55,9 @@ export default class Dashboard extends Component {
   appointmentBookButton = () => {
     return (
       <TouchableOpacity
-        onPress={() => { }}
+        onPress={() => {
+          this.props.navigation.navigate("BookAppointment")
+        }}
         style={{
           backgroundColor: COLORS.WHITE,
           flexDirection: 'row',

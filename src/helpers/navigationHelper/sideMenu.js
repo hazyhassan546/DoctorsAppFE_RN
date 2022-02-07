@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import {
   Text,
   TouchableOpacity,
@@ -13,6 +14,8 @@ import COLORS from '../../common/colors';
 import images from '../../common/images';
 import Images from '../../common/images';
 import { commonStyle } from '../../common/styles';
+import { store } from '../../redux/store/index';
+import { LOGOUT } from '../../redux/types/auth.types';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
@@ -26,7 +29,7 @@ export default class SideMenu extends Component {
         {
           id: 0,
           title: 'Home',
-          key: 'Home',
+          key: 'Dashboard',
           image: images.home,
           selected: true,
         },
@@ -40,7 +43,7 @@ export default class SideMenu extends Component {
         {
           id: 2,
           title: 'Profile',
-          key: 'Profile',
+          key: 'UserProfile',
           image: images.person,
           selected: false,
         },
@@ -71,6 +74,8 @@ export default class SideMenu extends Component {
     this.props.navigation.navigate(tab.key);
   };
 
+
+
   render() {
     return (
       <View
@@ -99,7 +104,7 @@ export default class SideMenu extends Component {
             }}
           >
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Home')}
+              onPress={() => this.props.navigation.navigate('UserProfile')}
               style={styles.imageContainer}>
               <View style={styles.buttonStyle}>
                 <Image source={images.doctor} style={styles.imageStyle} resizeMode="contain" />
@@ -144,12 +149,21 @@ export default class SideMenu extends Component {
 
           <View style={styles.socialImagesArea}>
             <TouchableOpacity
-              onPress={() => {
+              onPress={async () => {
+                await AsyncStorage.removeItem("user", () => {
+                  this.props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Login' }],
+                  });
+                  store.dispatch({
+                    type: LOGOUT
+                  })
+                });
+
               }}
               style={styles.imageWrap}>
               <Image source={images.logout} style={styles.socialImages} />
               <Text style={styles.tabText}>{'Logout'}</Text>
-
             </TouchableOpacity>
           </View>
         </View>

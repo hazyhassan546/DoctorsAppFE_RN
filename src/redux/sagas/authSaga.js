@@ -1,16 +1,16 @@
 import { all, take, call, put, fork } from 'redux-saga/effects';
 import { authActionCreator } from '../actions/auth.actions';
 import { LoginApi, SignUpApi } from '../Api/apiCalls';
-import { LOGIN, SIGNUP } from '../types/auth.types';
+import { LOGIN, LOGOUT, SIGNUP } from '../types/auth.types';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 import { AsyncStorage } from 'react-native';
 
 function* loginSaga({ payload }) {
+
   try {
     const response = yield call(LoginApi, payload);
-    yield AsyncStorage.setItem("user", JSON.stringify(response.user))
     yield put(authActionCreator.loginUserSuccess(response.user));
   } catch (err) {
     console.log(err);
@@ -65,6 +65,25 @@ function* signUpSaga({ payload }) {
   }
 }
 
+function* logoutSaga() {
+
+  try {
+    const response = yield call(LoginApi, payload);
+    yield put(authActionCreator.loginUserSuccess(response.user));
+  } catch (err) {
+    console.log(err);
+    console.log('Not signed in!');
+    let error = '';
+    if (err.code === 'auth/user-not-found') {
+      error = 'Account not exist';
+    } else if (err.code === 'auth/wrong-password') {
+      error = 'Wrong password';
+    }
+    yield put(authActionCreator.loginUserError(error));
+  }
+}
+
+
 function* loginWatchersSaga() {
   while (true) {
     const action = yield take(LOGIN);
@@ -79,6 +98,13 @@ function* signUpWatchersSaga() {
   }
 }
 
+function* LogoutWatchersSaga() {
+  while (true) {
+    const action = yield take(LOGOUT);
+    yield* logoutSaga(action);
+  }
+}
+
 export default function* () {
-  yield all([fork(loginWatchersSaga), fork(signUpWatchersSaga)]);
+  yield all([fork(loginWatchersSaga), fork(signUpWatchersSaga), fork(LogoutWatchersSaga)]);
 }

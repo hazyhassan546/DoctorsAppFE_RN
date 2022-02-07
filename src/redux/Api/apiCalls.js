@@ -1,5 +1,5 @@
-import {ENUMS} from '../../common/routes';
-import {API} from '../../helpers/apiHelper';
+import { ENUMS } from '../../common/routes';
+import { API } from '../../helpers/apiHelper';
 import auth from '@react-native-firebase/auth';
 
 export function LoginApi(params) {
