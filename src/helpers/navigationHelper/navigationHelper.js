@@ -27,6 +27,8 @@ import SelectCategory from '../../screens/BookAppointmentScreens/SelectCategory'
 import SelectDoctor from '../../screens/BookAppointmentScreens/SelectDoctor';
 import DoctorDetail from '../../screens/BookAppointmentScreens/DoctorDetails';
 import AddDays from '../../screens/BookAppointmentScreens/SelectDays';
+import WaitingScreen from '../../screens/BookAppointmentScreens/WaitingScreen';
+import ConformAppointmentSuccess from '../../screens/BookAppointmentScreens/ConformAppointmentSuccess';
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -55,7 +57,7 @@ function AppStack() {
         component={UserProfile}
         options={{headerShown: false}}
       />
-      
+
       <ApplicationStack.Screen
         headerMode="none"
         name="History"
@@ -95,11 +97,25 @@ function AppStack() {
 
       <ApplicationStack.Screen
         headerMode="none"
+        name="WaitingScreen"
+        component={WaitingScreen}
+        options={{headerShown: false}}
+      />
+
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="ConformAppointmentSuccess"
+        component={ConformAppointmentSuccess}
+        options={{headerShown: false}}
+      />
+
+      <ApplicationStack.Screen
+        headerMode="none"
         name="AddDays"
         component={AddDays}
         options={{headerShown: false}}
       />
-      
+
       <ApplicationStack.Screen
         headerMode="none"
         name="BookAppointment"

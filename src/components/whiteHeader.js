@@ -33,11 +33,13 @@ class BackWhiteHeader extends Component {
           <TouchableOpacity
             onPress={this.props.onMenuPress}
             style={[styles.touchableHide]}>
-            <Icon
-              name="arrow-back"
-              type="MaterialIcons"
-              color={COLORS.PRIMARY}
-            />
+            <Image
+              source={images.backArrow}
+              style={{
+                width: 20,
+                height: 20,
+                resizeMode: 'contain',
+              }}></Image>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.props.onBellPress}

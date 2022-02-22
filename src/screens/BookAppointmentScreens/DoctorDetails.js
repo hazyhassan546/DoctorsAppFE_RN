@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {Modal} from 'react-native';
 import {Alert} from 'react-native';
 import {Image, Text, TouchableOpacity, View, ScrollView} from 'react-native';
+import {Calendar} from 'react-native-calendars';
 import COLORS from '../../common/colors';
 import images from '../../common/images';
 import {commonStyle} from '../../common/styles';
@@ -10,110 +12,12 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
-
-const data = [
-  {
-    id: 0,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 2,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 3,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 4,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 5,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 6,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 7,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 8,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 9,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 10,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 11,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-  {
-    id: 12,
-    name: 'Dr .Hassan',
-    avatar:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62AUTV6YaIsWGg6pFu1OS9NGUy-DTxj5ZGw&usqp=CAU',
-    spec: 'Dentist',
-    address: '2km',
-  },
-];
 export default class DoctorDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: props?.route?.params?.data,
+      modalVisible: false,
     };
   }
 
@@ -196,13 +100,19 @@ export default class DoctorDetail extends Component {
       </TouchableOpacity>
     );
   };
+  toggleModal = () => {
+    this.setState({
+      modalVisible: !this.state.modalVisible,
+    });
+  };
 
   render() {
-    const {data} = this.state;
+    const {data, modalVisible} = this.state;
     return (
       <View
         style={{
           flex: 1,
+          backgroundColor: '#E7FAF9',
         }}>
         <BackHeader
           edit={true}
@@ -282,8 +192,7 @@ export default class DoctorDetail extends Component {
           </View>
           <TouchableOpacity
             onPress={() => {
-              // this.props.setDocAvailability(data.availability);
-              this.props.navigation.navigate('AddDays');
+              this.toggleModal();
             }}
             style={{
               marginHorizontal: GetOptimalWidth(20),
@@ -300,19 +209,19 @@ export default class DoctorDetail extends Component {
                 numberOfLines={1}
                 style={{
                   ...commonStyle.globalTextStyles,
-                  fontSize: scaledFontSize(16),
-                  color: COLORS.PRIMARY_TEXT,
+                  fontSize: scaledFontSize(14),
+                  fontWeight: '600',
+                  color: COLORS.BLACK,
                 }}>
-                {'Select Days'}
+                {'Select Appointment Date'}
               </Text>
-              <Text
-                numberOfLines={1}
+              <Image
+                source={images.calendar2}
                 style={{
-                  ...commonStyle.globalTextStyles,
-                  fontSize: scaledFontSize(20),
-                }}>
-                {'>'}
-              </Text>
+                  width: GetOptimalWidth(20),
+                  height: GetOptimalWidth(20),
+                  resizeMode: 'contain',
+                }}></Image>
             </View>
             <Text
               numberOfLines={1}
@@ -527,6 +436,54 @@ export default class DoctorDetail extends Component {
             </View>
           ) : null}
         </ScrollView>
+        <Modal animationType="slide" visible={modalVisible}>
+          <View
+            style={{
+              backgroundColor: null,
+              flex: 1,
+              justifyContent: 'center',
+              // alignItems: 'center',
+            }}>
+            <Calendar
+              minDate={Date()}
+              onDayPress={day => {
+                alert(day);
+              }}
+            />
+            <Text
+              numberOfLines={1}
+              style={{
+                ...commonStyle.globalTextStyles,
+                fontSize: scaledFontSize(12),
+                alignSelf: 'center',
+              }}>
+              {'Please select date for appointment'}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.toggleModal();
+              }}
+              style={{
+                backgroundColor: COLORS.PRIMARY,
+                marginHorizontal: GetOptimalWidth(20),
+                padding: GetOptimalHieght(15),
+                borderRadius: GetOptimalHieght(10),
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: GetOptimalHieght(20),
+              }}>
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...commonStyle.globalTextStyles,
+                  fontSize: scaledFontSize(16),
+                  color: COLORS.WHITE,
+                }}>
+                {'Select Date'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
     );
   }

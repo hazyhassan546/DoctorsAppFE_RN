@@ -23,10 +23,14 @@ const dot = require('../assets/images/dot.png');
 const check = require('../assets/images/check.png');
 const filter = require('../assets/images/filter.png');
 const recent = require('../assets/images/recent.png');
-
+const calendar2 = require('../assets/images/calendar_2.png');
+const backArrow = require('../assets/images/back.png');
+const greenCheck = require('../assets/images/greenCheck.png');
 
 export default Images = {
-
+  greenCheck,
+  backArrow,
+  calendar2,
   recent,
   filter,
   check,
