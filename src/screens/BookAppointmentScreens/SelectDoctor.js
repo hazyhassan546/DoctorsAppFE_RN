@@ -12,6 +12,7 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
+import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
 
 const data = [
   {
@@ -112,7 +113,7 @@ const data = [
     address: '2km',
   },
 ];
-export default class SelectDoctor extends Component {
+class SelectDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -238,9 +239,10 @@ export default class SelectDoctor extends Component {
             }}></Image>
         </TouchableOpacity>
         <FlatList
-          data={data}
+          data={this.props.hospitalData.doctors}
           keyExtractor={item => item.id}
           renderItem={this.renderItem}
+          ListEmptyComponent={<Text>{'Nothing Found'}</Text>}
           // refreshing={this.props?.hospitalData?.loading}
           // onRefresh={() => this.props.getHospital()}
         />
@@ -248,3 +250,5 @@ export default class SelectDoctor extends Component {
     );
   }
 }
+
+export default hospitalConnect()(SelectDoctor);

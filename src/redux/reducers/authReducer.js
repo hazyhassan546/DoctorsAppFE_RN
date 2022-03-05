@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {
   LOGIN,
@@ -8,7 +8,7 @@ import {
   SIGNUP,
   SIGNUP_ERROR,
   SIGNUP_SUCCESS,
-  LOGOUT
+  LOGOUT,
 } from '../types/auth.types';
 
 const defaultState = {
@@ -18,8 +18,9 @@ const defaultState = {
   user: {},
   error: '',
 };
+
 export default function AuthReducer(state = defaultState, action = {}) {
-  const { type, payload } = action;
+  const {type, payload} = action;
   switch (type) {
     case LOGIN:
       return {
@@ -73,7 +74,7 @@ export default function AuthReducer(state = defaultState, action = {}) {
     case LOGOUT:
       return {
         ...state,
-        user: {},
+        user: null,
       };
     default:
       return state;

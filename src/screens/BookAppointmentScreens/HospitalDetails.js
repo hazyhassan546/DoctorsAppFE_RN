@@ -11,6 +11,7 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
+import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
 class HospitalDetail extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +34,7 @@ class HospitalDetail extends Component {
             this.props.navigation.goBack();
           }}
           onBellPress={() => {
-            this.props.navigation.navigate('UpdateHospital', {data: data});
+            // this.props.navigation.navigate('UpdateHospital', {data: data});
           }}
         />
         <ScrollView>
@@ -141,9 +142,15 @@ class HospitalDetail extends Component {
               marginVertical: 20,
               alignSelf: 'center',
             }}>
-            <Button text={'Select'} onPress={()=>{
-              this.props.navigation.navigate("SelectCategory");
-            }} loading={false} />
+            <Button
+              text={'Select'}
+              onPress={() => {
+                this.props.selectHospital(data);
+                this.props.getCategories();
+                this.props.navigation.navigate('SelectCategory', {data: data});
+              }}
+              loading={false}
+            />
           </View>
         </ScrollView>
       </View>
@@ -151,4 +158,4 @@ class HospitalDetail extends Component {
   }
 }
 
-export default HospitalDetail;
+export default hospitalConnect()(HospitalDetail);

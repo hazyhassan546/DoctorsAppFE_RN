@@ -12,7 +12,8 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
-export default class DoctorDetail extends Component {
+import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
+class DoctorDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +22,9 @@ export default class DoctorDetail extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.selectDay(null);
+  }
 
   renderItem = ({item}) => {
     return (
@@ -123,7 +126,11 @@ export default class DoctorDetail extends Component {
             alert('bell');
           }}
         />
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: 100,
+          }}>
           <View
             // onPress={() => this.props.navigation.navigate("DoctorDetail")}
             style={{
@@ -180,6 +187,7 @@ export default class DoctorDetail extends Component {
                 }}>
                 {data?.hospitalName}
               </Text>
+
               <Text
                 numberOfLines={1}
                 style={{
@@ -188,11 +196,25 @@ export default class DoctorDetail extends Component {
                 }}>
                 {'Address  ' + data?.address}
               </Text>
+
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...commonStyle.globalTextStyles,
+                  fontSize: scaledFontSize(12),
+                }}>
+                {'Appointment Fee ' +
+                  (data?.appointmentPrice ? data?.appointmentPrice : '0') +
+                  ' Rs'}
+              </Text>
             </View>
           </View>
           <TouchableOpacity
             onPress={() => {
-              this.toggleModal();
+              this.props.navigation.navigate('AddDays', {
+                data: data.availability,
+              });
+              // this.toggleModal();
             }}
             style={{
               marginHorizontal: GetOptimalWidth(20),
@@ -213,7 +235,7 @@ export default class DoctorDetail extends Component {
                   fontWeight: '600',
                   color: COLORS.BLACK,
                 }}>
-                {'Select Appointment Date'}
+                {'Select Appointment Day'}
               </Text>
               <Image
                 source={images.calendar2}
@@ -223,15 +245,17 @@ export default class DoctorDetail extends Component {
                   resizeMode: 'contain',
                 }}></Image>
             </View>
-            <Text
-              numberOfLines={1}
-              style={{
-                ...commonStyle.globalTextStyles,
-                fontSize: scaledFontSize(12),
-                color: '#2EBFB8',
-              }}>
-              {'Sunday'}
-            </Text>
+            {this.props?.hospitalData?.selectedDay?.day ? (
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...commonStyle.globalTextStyles,
+                  fontSize: scaledFontSize(12),
+                  color: '#2EBFB8',
+                }}>
+                {this.props?.hospitalData?.selectedDay?.day}
+              </Text>
+            ) : null}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -245,7 +269,7 @@ export default class DoctorDetail extends Component {
               borderRadius: GetOptimalHieght(10),
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: GetOptimalHieght(20),
+              marginVertical: GetOptimalHieght(20),
             }}>
             <Text
               numberOfLines={1}
@@ -488,3 +512,5 @@ export default class DoctorDetail extends Component {
     );
   }
 }
+
+export default hospitalConnect()(DoctorDetail);

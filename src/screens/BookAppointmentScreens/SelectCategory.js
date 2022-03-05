@@ -12,6 +12,7 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
+import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
 
 const data = [
   {
@@ -39,17 +40,23 @@ const data = [
       'https://lh5.googleusercontent.com/p/AF1QipMaANAWXvBt8hZ7mw_nfH3lTA4Cd0eAYZER8DWv=w1080-k-no',
   },
 ];
-export default class SelectCategory extends Component {
+class SelectCategory extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      hospitalData: this.props.route.params.data,
+    };
   }
 
-  renderItem = ({item}) => {
+  renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
+        key={index}
         onPress={() => {
-          this.props.navigation.navigate('SelectDoctor');
+          this.props.getDoctor({
+            ...item,
+            hospitalInfo: this.state.hospitalData,
+          });
         }}
         style={{
           flex: 1,
@@ -138,14 +145,16 @@ export default class SelectCategory extends Component {
           </View>
         </View>
         <FlatList
-          data={data}
-          keyExtractor={item => item.id}
+          data={this.props?.hospitalData?.categories}
+          keyExtractor={item => item.uid}
           renderItem={this.renderItem}
           numColumns={2}
-          // refreshing={this.props?.hospitalData?.loading}
-          // onRefresh={() => this.props.getHospital()}
+          refreshing={this.props?.hospitalData?.loading}
+          onRefresh={() => this.props.getCategories()}
         />
       </View>
     );
   }
 }
+
+export default hospitalConnect()(SelectCategory);

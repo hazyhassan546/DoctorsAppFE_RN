@@ -80,6 +80,7 @@ export default class Dashboard extends Component {
             <AppointmentCard />
             <TouchableOpacity
               onPress={() => {
+                this.props.getHospital();
                 this.props.navigation.navigate('HospitalListing');
               }}
               style={{
@@ -99,7 +100,7 @@ export default class Dashboard extends Component {
                     fontSize: scaledFontSize(16),
                     color: COLORS.PRIMARY,
                   }}>
-                  Book New
+                  {'Book New'}
                 </Text>
                 <Text
                   style={{
@@ -107,7 +108,7 @@ export default class Dashboard extends Component {
                     fontSize: scaledFontSize(16),
                     color: COLORS.PRIMARY,
                   }}>
-                  Appointment
+                  {'Appointment'}
                 </Text>
               </View>
 

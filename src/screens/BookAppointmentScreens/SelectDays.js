@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {FlatList} from 'react-native';
 import {Image, Text, TouchableOpacity, View, ScrollView} from 'react-native';
+import Toast from 'react-native-toast-message';
 import COLORS from '../../common/colors';
 import images from '../../common/images';
 import {commonStyle} from '../../common/styles';
@@ -10,6 +11,7 @@ import {
   GetOptimalWidth,
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
+import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
 class AddDays extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +53,14 @@ class AddDays extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
+          if (item?.availability) {
+            this.props.selectDay(item);
+            this.props.navigation.goBack();
+          } else {
+            Toast.show({
+              text1: 'Doctor is not available on ' + item.day,
+            });
+          }
           // let days = this.state.availability;
           // days[index].availability = !days[index].availability;
           // this.props.setDocAvailability(days);
@@ -113,7 +123,7 @@ class AddDays extends Component {
           {'Days in a Week'}
         </Text>
         <FlatList
-          data={availability}
+          data={this.props.route.params.data}
           keyExtractor={item => item.day}
           renderItem={this.renderItem}></FlatList>
       </View>
@@ -121,4 +131,4 @@ class AddDays extends Component {
   }
 }
 
-export default AddDays;
+export default hospitalConnect()(AddDays);

@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import SideMenu from './sideMenu';
 /// Drawer screens
 import Home from '../../screens/home';
+import {navigationRef} from './RootNavigation';
 
 //// Stack screens out of drawer.
 import Welcome from '../../screens/welcome';
@@ -42,7 +43,9 @@ function AuthStack() {
 function AppStack() {
   const AppState = store.getState();
   // alert(JSON.stringify(AppState));
-  const initialRouteName = AppState?.user ? 'DrawerMenus' : 'Welcome';
+  const initialRouteName = AppState?.authData?.user?.email
+    ? 'DrawerMenus'
+    : 'Welcome';
   return (
     <ApplicationStack.Navigator initialRouteName={initialRouteName}>
       <ApplicationStack.Screen
@@ -189,7 +192,7 @@ function DrawerMenus() {
 
 function Navigator() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <AppStack />
       <Toast ref={ref => Toast.setRef(ref)} />
     </NavigationContainer>
