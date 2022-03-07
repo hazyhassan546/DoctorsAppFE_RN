@@ -76,6 +76,12 @@ export default function AuthReducer(state = defaultState, action = {}) {
         ...state,
         user: null,
       };
+    case 'RESET_USER':
+      return {
+        ...state,
+        user: null,
+        loading: false,
+      };
     default:
       return state;
   }

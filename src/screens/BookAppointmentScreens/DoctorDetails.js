@@ -13,6 +13,7 @@ import {
   scaledFontSize,
 } from '../../helpers/commonHelpers/helpers';
 import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
+import Toast from 'react-native-toast-message';
 class DoctorDetail extends Component {
   constructor(props) {
     super(props);
@@ -26,83 +27,6 @@ class DoctorDetail extends Component {
     this.props.selectDay(null);
   }
 
-  renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('DoctorDetail')}
-        style={{
-          flexDirection: 'row',
-          marginHorizontal: GetOptimalWidth(20),
-          paddingVertical: GetOptimalHieght(30),
-          borderBottomWidth: 1,
-          borderBottomColor: COLORS.PRIMARY_GREY,
-        }}>
-        <View
-          style={{
-            width: GetOptimalWidth(70),
-            height: GetOptimalWidth(70),
-            resizeMode: 'contain',
-            borderRadius: GetOptimalWidth(10),
-            ...commonStyle.elevatedShadow,
-          }}>
-          <Image
-            source={{uri: item.avatar}}
-            style={{
-              width: GetOptimalWidth(70),
-              height: GetOptimalWidth(70),
-              resizeMode: 'cover',
-              borderRadius: GetOptimalWidth(10),
-            }}></Image>
-        </View>
-        <View
-          style={{
-            paddingHorizontal: GetOptimalWidth(20),
-            width: GetOptimalWidth(240),
-          }}>
-          <Text
-            numberOfLines={1}
-            style={{
-              ...commonStyle.globalTextStyles,
-              fontWeight: '600',
-              color: COLORS.BLACK,
-            }}>
-            {item.name}
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={{
-              ...commonStyle.globalTextStyles,
-
-              fontSize: scaledFontSize(12),
-            }}>
-            {item.spec}
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={{
-              ...commonStyle.globalTextStyles,
-              fontSize: scaledFontSize(12),
-            }}>
-            {'Adress - '}
-            {item.address}
-          </Text>
-        </View>
-        <View
-          style={{
-            justifyContent: 'center',
-          }}>
-          <Image
-            source={images.dots}
-            style={{
-              width: GetOptimalWidth(16),
-              height: GetOptimalWidth(16),
-              resizeMode: 'contain',
-              marginLeft: 10,
-            }}></Image>
-        </View>
-      </TouchableOpacity>
-    );
-  };
   toggleModal = () => {
     this.setState({
       modalVisible: !this.state.modalVisible,
@@ -260,7 +184,19 @@ class DoctorDetail extends Component {
           <TouchableOpacity
             onPress={() => {
               // this.props.setDocAvailability(data.availability);
-              this.props.navigation.navigate('BookAppointment');
+              if (this.props?.hospitalData?.selectedDay?.day) {
+                this.props.navigation.navigate('BookAppointment', {
+                  bookingData: {
+                    doctor: data,
+                    day: this.props?.hospitalData?.selectedDay,
+                  },
+                });
+              } else {
+                Toast.show({
+                  type: 'error',
+                  text1: 'Please select day for the appointment',
+                });
+              }
             }}
             style={{
               backgroundColor: COLORS.PRIMARY,

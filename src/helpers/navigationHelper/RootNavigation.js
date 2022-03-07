@@ -7,3 +7,12 @@ export function navigate(name, params) {
     navigationRef.navigate(name, params);
   }
 }
+
+export function navigateToHomeFromLogin() {
+  if (navigationRef.isReady()) {
+    navigationRef.reset({
+      index: 0,
+      routes: [{name: 'DrawerMenus'}],
+    });
+  }
+}

@@ -11,6 +11,9 @@ import {
   GET_DOCTORS_ERROR,
   GET_DOCTORS_SUCCESS,
   SELECT_DAY,
+  BOOK_APPOINTMENT,
+  BOOK_APPOINTMENT_SUCCESS,
+  BOOK_APPOINTMENT_ERROR,
 } from '../types/hospital.types';
 
 const defaultState = {
@@ -21,6 +24,8 @@ const defaultState = {
   doctors: [],
   selectedHospital: null,
   selectedDay: null,
+  bookingLoading: false,
+  showModal: false,
 };
 export default function hospitalReducer(state = defaultState, action = {}) {
   const {type, payload} = action;
@@ -87,6 +92,26 @@ export default function hospitalReducer(state = defaultState, action = {}) {
         selectedDay: payload,
       };
 
+    case BOOK_APPOINTMENT:
+      return {
+        ...state,
+        bookingLoading: true,
+      };
+    case BOOK_APPOINTMENT_SUCCESS:
+      return {
+        ...state,
+        bookingLoading: false,
+      };
+    case BOOK_APPOINTMENT_ERROR:
+      return {
+        ...state,
+        bookingLoading: false,
+      };
+    case 'SHOW_MODAL':
+      return {
+        ...state,
+        showModal: payload,
+      };
     default:
       return state;
   }

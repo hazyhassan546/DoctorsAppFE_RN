@@ -12,6 +12,9 @@ import {
   GET_DOCTORS_ERROR,
   GET_DOCTORS_SUCCESS,
   SELECT_DAY,
+  BOOK_APPOINTMENT,
+  BOOK_APPOINTMENT_SUCCESS,
+  BOOK_APPOINTMENT_ERROR,
 } from '../types/hospital.types';
 export const hospitalActionCreator = {
   //
@@ -31,4 +34,11 @@ export const hospitalActionCreator = {
   getCategories: createAction(GET_CATEGORY),
   getCategoriesSuccess: createAction(GET_CATEGORY_SUCCESS),
   getCategoriesError: createAction(GET_CATEGORY_ERROR),
+
+  bookAppointment: createAction(BOOK_APPOINTMENT),
+  bookAppointmentSuccess: createAction(BOOK_APPOINTMENT_SUCCESS),
+  bookAppointmentError: createAction(BOOK_APPOINTMENT_ERROR),
+
+  showModal: createAction("SHOW_MODAL"),
+
 };

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React, {Component} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import COLORS from '../../common/colors';
 import images from '../../common/images';
-import { commonStyle } from '../../common/styles';
+import {commonStyle} from '../../common/styles';
 import Button from '../../components/button';
 import StyledInput from '../../components/styledInput';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -21,18 +21,21 @@ export default class Login extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.authData.loginSuccess == true &&
-      prevProps.authData.loginSuccess == false
-    ) {
-      //this.props.navigation.navigate('DrawerMenus');
-      this.props.navigation.reset({
-        index: 0,
-        routes: [{ name: 'DrawerMenus' }],
-      });
-    }
+  componentDidMount() {
+    this.props.resetUser();
   }
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (
+  //     this.props.authData.loginSuccess == true &&
+  //     prevProps.authData.loginSuccess == false
+  //   ) {
+  //     //this.props.navigation.navigate('DrawerMenus');
+  //     this.props.navigation.reset({
+  //       index: 0,
+  //       routes: [{ name: 'DrawerMenus' }],
+  //     });
+  //   }
+  // }
 
   onChangeEmail = text => {
     this.setState({
@@ -55,7 +58,7 @@ export default class Login extends Component {
   };
 
   login = () => {
-    const { email, password, error } = this.state;
+    const {email, password, error} = this.state;
     this.props.loginUser({
       email: email,
       password: password,
@@ -63,7 +66,7 @@ export default class Login extends Component {
   };
 
   validate = () => {
-    const { email, password, error } = this.state;
+    const {email, password, error} = this.state;
     if (email === '' || !this.validateEmail()) {
       this.props.setError('Email is not valid');
       return;
@@ -75,8 +78,8 @@ export default class Login extends Component {
   };
 
   render() {
-    const { email, password } = this.state;
-    const { error, loading } = this.props.authData;
+    const {email, password} = this.state;
+    const {error, loading} = this.props.authData;
     return (
       <View style={styles.container}>
         <Image

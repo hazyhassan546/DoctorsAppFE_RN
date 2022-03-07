@@ -3,14 +3,17 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 import {AsyncStorage} from 'react-native';
+// import 'react-native-get-random-values';
 import * as RootNavigation from './../../helpers/navigationHelper/RootNavigation';
 // import 'react-native-get-random-values';
-import {v4 as uuidv4} from 'uuid';
+// import {v4 as uuidv4} from 'uuid';
+
 import Toast from 'react-native-toast-message';
 import {
   GET_HOSPITALS,
   GET_CATEGORY,
   GET_DOCTORS,
+  BOOK_APPOINTMENT,
 } from '../types/hospital.types';
 import {hospitalActionCreator} from '../actions/hospital.action';
 
@@ -51,6 +54,32 @@ function* getCategorySaga({payload}) {
   } catch (err) {
     console.log(err);
     yield put(hospitalActionCreator.getCategoriesError(err));
+  }
+}
+
+function* bookAppointmentSaga({payload}) {
+  try {
+    const uid = new Date();
+    let db_ref = yield database().ref(
+      '/DoctorApp/appointments/' + uid + payload.user.name,
+    );
+    yield db_ref
+      .set({...payload})
+      .then(() => {
+        Toast.show({
+          text1: 'Appointment Successfully Added',
+        });
+      })
+      .catch(() => {
+        console.log('Error');
+      });
+    yield put(hospitalActionCreator.bookAppointmentSuccess());
+    yield put(hospitalActionCreator.showModal(true));
+  } catch (err) {
+    console.log(err);
+    console.log('May be Not signed in!');
+    let error = err;
+    yield put(hospitalActionCreator.bookAppointmentError(error));
   }
 }
 
@@ -106,10 +135,18 @@ function* getCategoryWatcherSaga() {
   }
 }
 
+function* bookAppointmentWatcherSaga() {
+  while (true) {
+    const action = yield take(BOOK_APPOINTMENT);
+    yield* bookAppointmentSaga(action);
+  }
+}
+
 export default function* () {
   yield all([
     fork(getHospitalWatchersSaga),
     fork(getCategoryWatcherSaga),
     fork(getDoctorWatchersSaga),
+    fork(bookAppointmentWatcherSaga),
   ]);
 }

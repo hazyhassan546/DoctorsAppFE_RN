@@ -7,6 +7,7 @@ import {commonStyle} from '../../common/styles';
 import BackHeader from '../../components/backHeader';
 import Button from '../../components/button';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Toast from 'react-native-toast-message';
 
 import {
   GetOptimalHieght,
@@ -15,22 +16,51 @@ import {
 } from '../../helpers/commonHelpers/helpers';
 import {TextInput} from 'react-native';
 import ReactNativeModal from 'react-native-modal';
+import {authConnect} from '../../redux/connectors/authConnect';
+import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
 class BookAppointment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props?.route?.params?.data,
+      data: this.props?.route?.params?.bookingData,
       modalVisible: false,
+      message: '',
+      reason: '',
     };
   }
 
-  toggleModal = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
+  componentDidMount() {
+    Toast.show({
+      text1: 'You can add Message and Reason',
+      text2: 'Not Mandatory',
     });
+  }
+
+  bookAppointment = () => {
+    const {data, reason, message} = this.state;
+    const appointment = {
+      doctor: {
+        ...data.doctor,
+        availability: null,
+      },
+      day: data?.day,
+      reason: reason,
+      message: message,
+      approved_status: false,
+      complete_status: false,
+      paymentMethod: 'Easy Paisa',
+      paymentPaid: false,
+      user: this.props.authData.user?.data,
+    };
+
+    this.props.bookAppointment(appointment);
+  };
+
+  toggleModal = () => {
+    this.props.showModal(!this.props.hospitalData.showModal);
   };
   render() {
-    const {data} = this.state;
+    const {data, reason, message} = this.state;
     return (
       <View
         style={{
@@ -58,7 +88,7 @@ class BookAppointment extends Component {
                 fontWeight: 'bold',
                 fontSize: scaledFontSize(16),
               }}>
-              {'Dr. Clara Odding'}
+              {'Dr. ' + data?.doctor?.name}
               <Text
                 style={{
                   ...commonStyle.globalTextStyles,
@@ -87,7 +117,7 @@ class BookAppointment extends Component {
                   color: '#0FD3C4',
                   fontSize: scaledFontSize(26),
                 }}>
-                {'Thu, 09 Apr'}
+                {data?.day?.day}
               </Text>
             </TouchableOpacity>
             <View
@@ -99,7 +129,8 @@ class BookAppointment extends Component {
                 style={{
                   ...commonStyle.globalTextStyles,
                 }}>
-                {'Address - 2 km'}
+                {'Address - '}
+                {data?.doctor?.address}
               </Text>
             </View>
             <View
@@ -113,6 +144,12 @@ class BookAppointment extends Component {
             <TextInput
               placeholder={'Message'}
               placeholderTextColor={'#22B1A6'}
+              value={message}
+              onChangeText={text => {
+                this.setState({
+                  message: text,
+                });
+              }}
               style={{
                 backgroundColor: 'white',
                 padding: 20,
@@ -121,10 +158,17 @@ class BookAppointment extends Component {
                 color: '#22B1A6',
                 fontSize: scaledFontSize(16),
                 ...commonStyle.elevatedShadow,
-              }}></TextInput>
+              }}
+            />
             <TextInput
               placeholder={'Reason of the Visit'}
               placeholderTextColor={'#22B1A6'}
+              value={reason}
+              onChangeText={text => {
+                this.setState({
+                  reason: text,
+                });
+              }}
               style={{
                 backgroundColor: 'white',
                 padding: 20,
@@ -134,7 +178,8 @@ class BookAppointment extends Component {
                 marginTop: 20,
                 fontSize: scaledFontSize(16),
                 ...commonStyle.elevatedShadow,
-              }}></TextInput>
+              }}
+            />
 
             <Text
               style={{
@@ -153,7 +198,8 @@ class BookAppointment extends Component {
                 color: '#22B1A6',
                 fontSize: scaledFontSize(24),
               }}>
-              {'Rs. 1122'}
+              {'Rs. '}
+              {data?.doctor?.appointmentPrice}
             </Text>
           </View>
 
@@ -173,7 +219,13 @@ class BookAppointment extends Component {
               }}>
               {'Payment method'}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+            // onPress={() => {
+            //   this.setState({
+            //     modalVisible: true,
+            //   });
+            // }}
+            >
               <Text
                 style={{
                   ...commonStyle.globalTextStyles,
@@ -237,9 +289,10 @@ class BookAppointment extends Component {
               text={'Pay Now'}
               onPress={() => {
                 // this.props.navigation.navigate('SelectCategory');
-                this.toggleModal();
+                // this.toggleModal();
+                this.bookAppointment();
               }}
-              loading={false}
+              loading={this.props?.hospitalData?.bookingLoading}
             />
           </View>
         </ScrollView>
@@ -247,12 +300,28 @@ class BookAppointment extends Component {
         {/* ----------------- Modal --------------- */}
 
         <ReactNativeModal
-          isVisible={this.state.modalVisible}
+          isVisible={this.props.hospitalData.showModal}
           onSwipeComplete={this.toggleModal}
           animationIn={'slideInUp'}
           animationOut={'slideOutDown'}
           onModalHide={() => {
-            this.props.navigation.navigate('WaitingScreen');
+            const {data, reason, message} = this.state;
+            const appointment = {
+              doctor: {
+                ...data.doctor,
+                availability: null,
+              },
+              day: data?.day,
+              reason: reason,
+              message: message,
+              paymentMethod: 'Easy Paisa',
+              paymentPaid: false,
+              user: this.props.authData.user?.data,
+            };
+
+            this.props.navigation.navigate('WaitingScreen', {
+              appointment: appointment,
+            });
           }}
           style={{
             marginTop: 100,
@@ -322,4 +391,4 @@ class BookAppointment extends Component {
   }
 }
 
-export default BookAppointment;
+export default hospitalConnect()(authConnect()(BookAppointment));

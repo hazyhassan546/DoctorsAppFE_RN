@@ -3,6 +3,7 @@ import {
   LOGIN,
   LOGIN_ERROR,
   LOGIN_SUCCESS,
+  LOGOUT,
   SET_ERROR,
   SIGNUP,
   SIGNUP_ERROR,
@@ -17,4 +18,5 @@ export const authActionCreator = {
   signupSuccess: createAction(SIGNUP_SUCCESS),
   signupError: createAction(SIGNUP_ERROR),
   setError: createAction(SET_ERROR),
+  resetUser: createAction("RESET_USER"),
 };

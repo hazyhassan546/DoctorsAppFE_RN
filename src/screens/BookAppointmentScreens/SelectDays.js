@@ -54,6 +54,9 @@ class AddDays extends Component {
       <TouchableOpacity
         onPress={() => {
           if (item?.availability) {
+            Toast.show({
+              text1: item.day + ' is selected for appointment',
+            });
             this.props.selectDay(item);
             this.props.navigation.goBack();
           } else {

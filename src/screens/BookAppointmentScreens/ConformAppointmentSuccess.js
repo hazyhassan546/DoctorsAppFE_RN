@@ -200,7 +200,13 @@ class ConformAppointmentSuccess extends Component {
               loading={false}
             />
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.reset({
+                index: 0,
+                routes: [{name: 'DrawerMenus'}],
+              });
+            }}>
             <Text
               style={{
                 ...commonStyle.globalTextStyles,

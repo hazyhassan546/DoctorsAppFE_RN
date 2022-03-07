@@ -19,16 +19,10 @@ class WaitingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props?.route?.params?.data,
-      modalVisible: false,
+      data: this.props?.route?.params?.appointment,
     };
   }
 
-  toggleModal = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
-  };
   render() {
     const {data} = this.state;
     return (
@@ -59,7 +53,7 @@ class WaitingScreen extends Component {
                 fontWeight: 'bold',
                 fontSize: scaledFontSize(14),
               }}>
-              {'Dr. Clara Odding'}
+              {data.doctor.name}
               <Text
                 style={{
                   ...commonStyle.globalTextStyles,
@@ -88,7 +82,8 @@ class WaitingScreen extends Component {
                 style={{
                   ...commonStyle.globalTextStyles,
                 }}>
-                {'Address - 2 km'}
+                {'Address - '}
+                {data.doctor.address}
               </Text>
             </View>
             <View
@@ -113,9 +108,9 @@ class WaitingScreen extends Component {
                 fontSize: scaledFontSize(12),
                 color: 'black',
               }}>
-              {
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At'
-              }
+              {data.message == '' || !data.message
+                ? 'You did not mentioned any message for he doctor'
+                : data.message}
             </Text>
 
             <Text
@@ -133,9 +128,9 @@ class WaitingScreen extends Component {
                 fontSize: scaledFontSize(12),
                 color: 'black',
               }}>
-              {
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At'
-              }
+              {data.reason == '' || !data.reason
+                ? 'You did not mentioned any message for he doctor'
+                : data.reason}
             </Text>
 
             <Text
@@ -155,7 +150,8 @@ class WaitingScreen extends Component {
                 color: '#22B1A6',
                 fontSize: scaledFontSize(22),
               }}>
-              {'Rs. 1122'}
+              {'Rs. '}
+              {data.doctor.appointmentPrice}
             </Text>
           </View>
 
@@ -206,7 +202,7 @@ class WaitingScreen extends Component {
                   color: '#0FD3C4',
                   fontSize: scaledFontSize(13),
                 }}>
-                {'1232 **** **** ****'}
+                {data.paymentMethod}
               </Text>
             </View>
           </TouchableOpacity>
