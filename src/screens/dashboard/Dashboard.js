@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {ImageBackground} from 'react-native';
 import {View, ScrollView, Text} from 'react-native';
 import COLORS from '../../common/colors';
@@ -16,13 +16,24 @@ import {
 import {commonStyle} from '../../common/styles';
 import AppointmentCard from '../../components/appointmentCard';
 import HomeSlider from '../../components/homeSlider';
-export default class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import database from '@react-native-firebase/database';
 
-  EmptyComponent = () => {
+const Dashboard = props => {
+  useEffect(() => {
+    const onChildAdd = database()
+      .ref('/DoctorApp/appointments')
+      .on('child_changed', snapshot => {
+        alert(JSON.stringify(snapshot.val()));
+      });
+
+    // Stop listening for updates when no longer required
+    return () =>
+      database()
+        .ref('/DoctorApp/appointments')
+        .off('child_changed', onChildAdd);
+  }, []);
+
+  const EmptyComponent = () => {
     return (
       <>
         <Text
@@ -52,77 +63,77 @@ export default class Dashboard extends Component {
     );
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <HomeHeader
-          onMenuPress={() => {
-            this.props.navigation.openDrawer();
-          }}
-          onBellPress={() => {}}
-        />
-        <ImageBackground
-          source={Images.docBg}
-          resizeMode="contain"
+  return (
+    <View style={styles.container}>
+      <HomeHeader
+        onMenuPress={() => {
+          props.navigation.openDrawer();
+        }}
+        onBellPress={() => {}}
+      />
+      <ImageBackground
+        source={Images.docBg}
+        resizeMode="contain"
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: COLORS.SECONDARY,
+        }}>
+        <ScrollView
           style={{
-            width: '100%',
             height: '100%',
-            backgroundColor: COLORS.SECONDARY,
+            width: '100%',
+            paddingHorizontal: GetOptimalWidth(20),
           }}>
-          <ScrollView
+          <HomeSlider />
+          <EmptyComponent />
+          <AppointmentCard />
+          <TouchableOpacity
+            onPress={() => {
+              props.getHospital();
+              props.navigation.navigate('HospitalListing');
+            }}
             style={{
-              height: '100%',
-              width: '100%',
+              backgroundColor: COLORS.WHITE,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               paddingHorizontal: GetOptimalWidth(20),
+              paddingVertical: GetOptimalHieght(10),
+              ...commonStyle.elevatedShadow,
+              borderRadius: GetOptimalHieght(10),
             }}>
-            <HomeSlider />
-            <this.EmptyComponent />
-            <AppointmentCard />
-            <TouchableOpacity
-              onPress={() => {
-                this.props.getHospital();
-                this.props.navigation.navigate('HospitalListing');
-              }}
-              style={{
-                backgroundColor: COLORS.WHITE,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: GetOptimalWidth(20),
-                paddingVertical: GetOptimalHieght(10),
-                ...commonStyle.elevatedShadow,
-                borderRadius: GetOptimalHieght(10),
-              }}>
-              <View>
-                <Text
-                  style={{
-                    ...commonStyle.globalTextStyles,
-                    fontSize: scaledFontSize(16),
-                    color: COLORS.PRIMARY,
-                  }}>
-                  {'Book New'}
-                </Text>
-                <Text
-                  style={{
-                    ...commonStyle.globalTextStyles,
-                    fontSize: scaledFontSize(16),
-                    color: COLORS.PRIMARY,
-                  }}>
-                  {'Appointment'}
-                </Text>
-              </View>
-
-              <Image
-                source={images.calendar}
+            <View>
+              <Text
                 style={{
-                  width: GetOptimalHieght(60),
-                  height: GetOptimalHieght(60),
-                  resizeMode: 'contain',
-                }}></Image>
-            </TouchableOpacity>
-          </ScrollView>
-        </ImageBackground>
-      </View>
-    );
-  }
-}
+                  ...commonStyle.globalTextStyles,
+                  fontSize: scaledFontSize(16),
+                  color: COLORS.PRIMARY,
+                }}>
+                {'Book New'}
+              </Text>
+              <Text
+                style={{
+                  ...commonStyle.globalTextStyles,
+                  fontSize: scaledFontSize(16),
+                  color: COLORS.PRIMARY,
+                }}>
+                {'Appointment'}
+              </Text>
+            </View>
+
+            <Image
+              source={images.calendar}
+              style={{
+                width: GetOptimalHieght(60),
+                height: GetOptimalHieght(60),
+                resizeMode: 'contain',
+              }}></Image>
+          </TouchableOpacity>
+        </ScrollView>
+      </ImageBackground>
+    </View>
+  );
+};
+
+export default Dashboard;

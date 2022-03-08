@@ -209,7 +209,9 @@ class WaitingScreen extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('ConformAppointmentSuccess');
+              this.props.navigation.navigate('ConformAppointmentSuccess', {
+                appointment: data,
+              });
             }}
             style={{
               marginTop: 50,

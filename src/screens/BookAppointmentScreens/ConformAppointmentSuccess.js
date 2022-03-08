@@ -19,7 +19,7 @@ class ConformAppointmentSuccess extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props?.route?.params?.data,
+      data: this.props?.route?.params?.appointment,
       modalVisible: false,
     };
   }
@@ -72,7 +72,7 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(16),
                   marginLeft: 10,
                 }}>
-                {'Dr. Clara Odding'}
+                {'Appointment Confirmed'}
               </Text>
             </View>
             <View
@@ -92,7 +92,8 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(22),
                   marginLeft: 10,
                 }}>
-                {'Thu, 09 Apr'}
+                {data?.day.day}
+                {', 09 Apr'}
               </Text>
               <Text
                 style={{
@@ -145,7 +146,7 @@ class ConformAppointmentSuccess extends Component {
                 fontSize: scaledFontSize(14),
                 marginTop: 20,
               }}>
-              {'Dr. Clara Odding'}
+              {data?.doctor.name}
               <Text
                 style={{
                   ...commonStyle.globalTextStyles,
@@ -153,7 +154,8 @@ class ConformAppointmentSuccess extends Component {
                   fontWeight: '400',
                   fontSize: scaledFontSize(14),
                 }}>
-                {' - Dentist'}
+                {' - '}
+                {data.doctor.specialization}
               </Text>
             </Text>
             <View
@@ -166,7 +168,8 @@ class ConformAppointmentSuccess extends Component {
                 style={{
                   ...commonStyle.globalTextStyles,
                 }}>
-                {'Address - 2 km'}
+                {'Address - '}
+                {data.doctor.address}
               </Text>
             </View>
             <View

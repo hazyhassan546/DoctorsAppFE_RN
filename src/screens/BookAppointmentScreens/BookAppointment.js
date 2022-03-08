@@ -50,6 +50,7 @@ class BookAppointment extends Component {
       complete_status: false,
       paymentMethod: 'Easy Paisa',
       paymentPaid: false,
+      seen: false,
       user: this.props.authData.user?.data,
     };
 
