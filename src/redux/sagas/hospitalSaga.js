@@ -14,6 +14,7 @@ import {
   GET_CATEGORY,
   GET_DOCTORS,
   BOOK_APPOINTMENT,
+  GET_APPOINTMENTS,
 } from '../types/hospital.types';
 import {hospitalActionCreator} from '../actions/hospital.action';
 
@@ -59,9 +60,8 @@ function* getCategorySaga({payload}) {
 
 function* bookAppointmentSaga({payload}) {
   try {
-    const uid = new Date();
     let db_ref = yield database().ref(
-      '/DoctorApp/appointments/' + uid + payload.user.name,
+      '/DoctorApp/appointments/' + payload.uid + '/' + payload.id,
     );
     yield db_ref
       .set({...payload})
@@ -114,6 +114,34 @@ function* getDoctorSaga({payload}) {
   }
 }
 
+function* getAppointmentSaga({payload}) {
+  try {
+    let appointments = [];
+    let db_ref = database().ref('/DoctorApp/appointments/' + payload);
+
+    yield db_ref.once('value').then(snapshot => {
+      snapshot.forEach(child => {
+        const data = child.val();
+        if (payload === data?.uid) {
+          appointments.push(data);
+        }
+      });
+    });
+    alert(JSON.stringify(appointments.length));
+    yield put(hospitalActionCreator.getAppointmentSuccess(appointments));
+    // RootNavigation.navigate('SelectDoctor');
+  } catch (err) {
+    console.log(err);
+    console.log('May be Not signed in!');
+    // Toast.show({
+    //     type: 'info',
+    //     text1: 'Something went wrong'
+    // });
+    let error = err;
+    yield put(hospitalActionCreator.getAppointmentError(error));
+  }
+}
+
 function* getHospitalWatchersSaga() {
   while (true) {
     const action = yield take(GET_HOSPITALS);
@@ -142,11 +170,19 @@ function* bookAppointmentWatcherSaga() {
   }
 }
 
+function* getAppointmentWatcherSaga() {
+  while (true) {
+    const action = yield take(GET_APPOINTMENTS);
+    yield* getAppointmentSaga(action);
+  }
+}
+
 export default function* () {
   yield all([
     fork(getHospitalWatchersSaga),
     fork(getCategoryWatcherSaga),
     fork(getDoctorWatchersSaga),
     fork(bookAppointmentWatcherSaga),
+    fork(getAppointmentWatcherSaga),
   ]);
 }

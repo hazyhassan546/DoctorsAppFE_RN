@@ -19,19 +19,19 @@ import HomeSlider from '../../components/homeSlider';
 import database from '@react-native-firebase/database';
 
 const Dashboard = props => {
-  useEffect(() => {
-    const onChildAdd = database()
-      .ref('/DoctorApp/appointments')
-      .on('child_changed', snapshot => {
-        alert(JSON.stringify(snapshot.val()));
-      });
+  // useEffect(() => {
+  //   const onChildAdd = database()
+  //     .ref('/DoctorApp/appointments')
+  //     .on('child_changed', snapshot => {
+  //       alert(JSON.stringify(snapshot.val()));
+  //     });
 
-    // Stop listening for updates when no longer required
-    return () =>
-      database()
-        .ref('/DoctorApp/appointments')
-        .off('child_changed', onChildAdd);
-  }, []);
+  //   // Stop listening for updates when no longer required
+  //   return () =>
+  //     database()
+  //       .ref('/DoctorApp/appointments')
+  //       .off('child_changed', onChildAdd);
+  // }, []);
 
   const EmptyComponent = () => {
     return (

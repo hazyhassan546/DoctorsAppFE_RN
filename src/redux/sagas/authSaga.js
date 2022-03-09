@@ -7,6 +7,7 @@ import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 import {AsyncStorage} from 'react-native';
 import * as RootNavigation from './../../helpers/navigationHelper/RootNavigation';
+import {hospitalActionCreator} from '../actions/hospital.action';
 
 function* loginSaga({payload}) {
   try {
@@ -20,6 +21,7 @@ function* loginSaga({payload}) {
     yield put(
       authActionCreator.loginUserSuccess({...response.user, data: data}),
     );
+    yield put(hospitalActionCreator.getAppointment(response.user.uid));
     RootNavigation.navigateToHomeFromLogin();
     // RootNavigation.navigate('DrawerMenus');
   } catch (err) {

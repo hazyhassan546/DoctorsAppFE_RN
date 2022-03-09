@@ -26,6 +26,7 @@ class BookAppointment extends Component {
       modalVisible: false,
       message: '',
       reason: '',
+      appointmentId: Math.floor(Math.random() * 10000),
     };
   }
 
@@ -37,7 +38,8 @@ class BookAppointment extends Component {
   }
 
   bookAppointment = () => {
-    const {data, reason, message} = this.state;
+    const {data, reason, message, appointmentId} = this.state;
+
     const appointment = {
       doctor: {
         ...data.doctor,
@@ -52,6 +54,8 @@ class BookAppointment extends Component {
       paymentPaid: false,
       seen: false,
       user: this.props.authData.user?.data,
+      uid: this?.props?.authData?.user?._user?.uid,
+      id: appointmentId,
     };
 
     this.props.bookAppointment(appointment);
@@ -306,18 +310,23 @@ class BookAppointment extends Component {
           animationIn={'slideInUp'}
           animationOut={'slideOutDown'}
           onModalHide={() => {
-            const {data, reason, message} = this.state;
+            const {data, reason, message, appointmentId} = this.state;
             const appointment = {
               doctor: {
                 ...data.doctor,
-                availability: null,
+                availability: '',
               },
               day: data?.day,
               reason: reason,
               message: message,
+              approved_status: false,
+              complete_status: false,
               paymentMethod: 'Easy Paisa',
               paymentPaid: false,
+              seen: false,
               user: this.props.authData.user?.data,
+              uid: this?.props?.authData?.user?._user?.uid,
+              id: appointmentId,
             };
 
             this.props.navigation.navigate('WaitingScreen', {

@@ -93,7 +93,8 @@ class ConformAppointmentSuccess extends Component {
                   marginLeft: 10,
                 }}>
                 {data?.day.day}
-                {', 09 Apr'}
+                {''}
+                {data?.day.date}
               </Text>
               <Text
                 style={{
@@ -103,7 +104,7 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(22),
                   marginRight: 10,
                 }}>
-                {'08:22'}
+                {data?.day.time}
               </Text>
             </View>
 
@@ -134,7 +135,7 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(18),
                   marginRight: 10,
                 }}>
-                {'112'}
+                {data.id}
               </Text>
             </View>
 
