@@ -29,6 +29,7 @@ const defaultState = {
   selectedDay: null,
   bookingLoading: false,
   showModal: false,
+  appointments: [],
 };
 export default function hospitalReducer(state = defaultState, action = {}) {
   const {type, payload} = action;
@@ -124,6 +125,7 @@ export default function hospitalReducer(state = defaultState, action = {}) {
       return {
         ...state,
         loading: false,
+        appointments: payload,
       };
     case GET_APPOINTMENTS_ERROR:
       return {

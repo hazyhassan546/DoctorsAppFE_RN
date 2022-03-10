@@ -127,7 +127,7 @@ function* getAppointmentSaga({payload}) {
         }
       });
     });
-    alert(JSON.stringify(appointments.length));
+    // alert(JSON.stringify(appointments.length));
     yield put(hospitalActionCreator.getAppointmentSuccess(appointments));
     // RootNavigation.navigate('SelectDoctor');
   } catch (err) {
