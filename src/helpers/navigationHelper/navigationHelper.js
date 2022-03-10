@@ -31,6 +31,7 @@ import AddDays from '../../screens/BookAppointmentScreens/SelectDays';
 import WaitingScreen from '../../screens/BookAppointmentScreens/WaitingScreen';
 import ConformAppointmentSuccess from '../../screens/BookAppointmentScreens/ConformAppointmentSuccess';
 import AppointmentDetails from '../../screens/appointmentDetails/appointmentDetails';
+import Notifications from '../../screens/notifications/Notifications';
 // here is our app screen stack
 const ApplicationStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -74,6 +75,14 @@ function AppStack() {
         component={AppointmentDetails}
         options={{headerShown: false}}
       />
+      <ApplicationStack.Screen
+        headerMode="none"
+        name="Notifications"
+        component={Notifications}
+        options={{headerShown: false}}
+      />
+
+
 
       <ApplicationStack.Screen
         headerMode="none"

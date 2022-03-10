@@ -23,7 +23,7 @@ function WaitingScreen(props) {
       .on('child_changed', snapshot => {
         const appointment = snapshot.val();
         if (
-          appointment.id === props?.route?.params?.appointment.id &&
+          appointment.id == props?.route?.params?.appointment.id &&
           appointment.approved_status == true
         ) {
           // now perform event

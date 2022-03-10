@@ -92,9 +92,9 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(22),
                   marginLeft: 10,
                 }}>
-                {data?.day.day}
+                {data?.day?.day}
                 {''}
-                {data?.day.date}
+                {data?.day?.date}
               </Text>
               <Text
                 style={{
@@ -104,7 +104,7 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(22),
                   marginRight: 10,
                 }}>
-                {data?.day.time}
+                {data?.day?.time}
               </Text>
             </View>
 
@@ -135,7 +135,7 @@ class ConformAppointmentSuccess extends Component {
                   fontSize: scaledFontSize(18),
                   marginRight: 10,
                 }}>
-                {data.id}
+                {data?.appointmentNumber}
               </Text>
             </View>
 
@@ -147,7 +147,7 @@ class ConformAppointmentSuccess extends Component {
                 fontSize: scaledFontSize(14),
                 marginTop: 20,
               }}>
-              {data?.doctor.name}
+              {data?.doctor?.name}
               <Text
                 style={{
                   ...commonStyle.globalTextStyles,

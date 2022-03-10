@@ -18,6 +18,9 @@ import {TextInput} from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 import {authConnect} from '../../redux/connectors/authConnect';
 import {hospitalConnect} from '../../redux/connectors/hospitalConnect';
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
+
 class BookAppointment extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +29,8 @@ class BookAppointment extends Component {
       modalVisible: false,
       message: '',
       reason: '',
-      appointmentId: Math.floor(Math.random() * 10000),
+      appointmentId: uuidv4(),
+      appointmentNumber: this.props?.hospitalData?.appointments?.length + 1,
     };
   }
 
@@ -38,7 +42,8 @@ class BookAppointment extends Component {
   }
 
   bookAppointment = () => {
-    const {data, reason, message, appointmentId} = this.state;
+    const {data, reason, message, appointmentId, appointmentNumber} =
+      this.state;
 
     const appointment = {
       doctor: {
@@ -56,6 +61,7 @@ class BookAppointment extends Component {
       user: this.props.authData.user?.data,
       uid: this?.props?.authData?.user?._user?.uid,
       id: appointmentId,
+      appointmentNumber: appointmentNumber,
     };
 
     this.props.bookAppointment(appointment);
@@ -310,7 +316,8 @@ class BookAppointment extends Component {
           animationIn={'slideInUp'}
           animationOut={'slideOutDown'}
           onModalHide={() => {
-            const {data, reason, message, appointmentId} = this.state;
+            const {data, reason, message, appointmentId, appointmentNumber} =
+              this.state;
             const appointment = {
               doctor: {
                 ...data.doctor,
@@ -327,6 +334,7 @@ class BookAppointment extends Component {
               user: this.props.authData.user?.data,
               uid: this?.props?.authData?.user?._user?.uid,
               id: appointmentId,
+              appointmentNumber: appointmentNumber,
             };
 
             this.props.navigation.navigate('WaitingScreen', {

@@ -17,21 +17,61 @@ import {commonStyle} from '../../common/styles';
 import AppointmentCard from '../../components/appointmentCard';
 import HomeSlider from '../../components/homeSlider';
 import database from '@react-native-firebase/database';
+import Toast from 'react-native-toast-message';
 
 const Dashboard = props => {
-  // useEffect(() => {
-  //   const onChildAdd = database()
-  //     .ref('/DoctorApp/appointments')
-  //     .on('child_changed', snapshot => {
-  //       alert(JSON.stringify(snapshot.val()));
-  //     });
+  useEffect(() => {
+    /////////////////////////////---  ---////////////////////////////////
+    const child_changed = database()
+      .ref('/DoctorApp/appointments/' + props.authData?.user?._user?.uid)
+      .on('child_changed', snapshot => {
+        const appointment = snapshot.val();
 
-  //   // Stop listening for updates when no longer required
-  //   return () =>
-  //     database()
-  //       .ref('/DoctorApp/appointments')
-  //       .off('child_changed', onChildAdd);
-  // }, []);
+        ///////////
+        if (appointment?.approved_status == true) {
+          Toast.show({
+            text1: 'Your appointment is Booked',
+          });
+          props.addNotification({
+            text: 'Your appointment is Booked',
+            date: new Date(),
+            id: new Date(),
+          });
+          props.addNotification({
+            text: 'Your appointment request has been accepted',
+            date: new Date(),
+            id: new Date(),
+          });
+        } else {
+          Toast.show({
+            text1: 'Your appointment is Rejected',
+          });
+          props.addNotification({
+            text: 'Your appointment is Rejected',
+            date: new Date(),
+            id: new Date(),
+          });
+        }
+        //////////
+
+        if (appointment?.complete_status == true) {
+          Toast.show({
+            text1: 'Your appointment status is Completed',
+          });
+          props.addNotification({
+            text: 'Your appointment status is Completed',
+            date: new Date(),
+            id: new Date(),
+          });
+        }
+      });
+
+    // Stop listening for updates when no longer required
+    return () =>
+      database()
+        .ref('/DoctorApp/appointments')
+        .off('child_changed', child_changed);
+  }, []);
 
   const EmptyComponent = () => {
     return (
@@ -69,7 +109,9 @@ const Dashboard = props => {
         onMenuPress={() => {
           props.navigation.openDrawer();
         }}
-        onBellPress={() => {}}
+        onBellPress={() => {
+          props.navigation.navigate('Notifications');
+        }}
       />
       <ImageBackground
         source={Images.docBg}

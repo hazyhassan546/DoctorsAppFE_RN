@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,14 +8,14 @@ import {
   Platform,
 } from 'react-native';
 import COLORS from '../common/colors';
-import { Icon } from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {
   GetOptimalHieght,
   GetOptimalWidth,
   scaledFontSize,
 } from '../helpers/commonHelpers/helpers';
-import { commonStyle } from '../common/styles';
-
+import {commonStyle} from '../common/styles';
+import {notificationConnect} from '../redux/connectors/notificationConnect';
 class HomeHeader extends Component {
   render() {
     return (
@@ -37,9 +37,29 @@ class HomeHeader extends Component {
             onPress={this.props.onBellPress}
             style={[styles.touchableHide]}>
             <Icon name="bell" type="feather" color={COLORS.PRIMARY} />
+            <View
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: -10,
+                backgroundColor: 'orange',
+                minWidth: GetOptimalWidth(20),
+                minHeight: GetOptimalHieght(20),
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+              }}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: 'white',
+                }}>
+                {this.props.notificationData.notifications.length}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
-        <Text style={[styles.title, { color: COLORS.PRIMARY }]}>
+        <Text style={[styles.title, {color: COLORS.PRIMARY}]}>
           {'Hello, '}
           <Text style={styles.title}>{'Hassan!'}</Text>
         </Text>
@@ -47,7 +67,7 @@ class HomeHeader extends Component {
     );
   }
 }
-export default HomeHeader;
+export default notificationConnect()(HomeHeader);
 
 const styles = StyleSheet.create({
   container: {
