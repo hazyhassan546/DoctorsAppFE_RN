@@ -19,15 +19,14 @@ import ReactNativeModal from 'react-native-modal';
 function WaitingScreen(props) {
   React.useEffect(() => {
     const onChildAdd = database()
-      .ref('/DoctorApp/appointments/' + props?.route?.params?.appointment.uid)
+      .ref('/DoctorApp/appointments/')
       .on('child_changed', snapshot => {
         const appointment = snapshot.val();
         if (
           appointment.id == props?.route?.params?.appointment.id &&
+          appointment.uid == props?.route?.params?.appointment.uid &&
           appointment.approved_status == true
         ) {
-          // now perform event
-          // this function will compare the  id of the appointment for further navigation
           props.navigation.navigate('ConformAppointmentSuccess', {
             appointment: appointment,
           });

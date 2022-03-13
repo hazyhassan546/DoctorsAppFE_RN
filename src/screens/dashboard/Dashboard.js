@@ -23,46 +23,48 @@ const Dashboard = props => {
   useEffect(() => {
     /////////////////////////////---  ---////////////////////////////////
     const child_changed = database()
-      .ref('/DoctorApp/appointments/' + props.authData?.user?._user?.uid)
+      .ref('/DoctorApp/appointments/')
       .on('child_changed', snapshot => {
         const appointment = snapshot.val();
 
         ///////////
-        if (appointment?.approved_status == true) {
-          Toast.show({
-            text1: 'Your appointment is Booked',
-          });
-          props.addNotification({
-            text: 'Your appointment is Booked',
-            date: new Date(),
-            id: new Date(),
-          });
-          props.addNotification({
-            text: 'Your appointment request has been accepted',
-            date: new Date(),
-            id: new Date(),
-          });
-        } else {
-          Toast.show({
-            text1: 'Your appointment is Rejected',
-          });
-          props.addNotification({
-            text: 'Your appointment is Rejected',
-            date: new Date(),
-            id: new Date(),
-          });
-        }
-        //////////
+        if (props.authData?.user?._user?.uid == appointment?.uid) {
+          if (appointment?.approved_status == true) {
+            Toast.show({
+              text1: 'Your appointment is Booked',
+            });
+            props.addNotification({
+              text: 'Your appointment is Booked',
+              date: new Date(),
+              id: new Date(),
+            });
+            props.addNotification({
+              text: 'Your appointment request has been accepted',
+              date: new Date(),
+              id: new Date(),
+            });
+          } else {
+            Toast.show({
+              text1: 'Your appointment is Rejected',
+            });
+            props.addNotification({
+              text: 'Your appointment is Rejected',
+              date: new Date(),
+              id: new Date(),
+            });
+          }
+          //////////
 
-        if (appointment?.complete_status == true) {
-          Toast.show({
-            text1: 'Your appointment status is Completed',
-          });
-          props.addNotification({
-            text: 'Your appointment status is Completed',
-            date: new Date(),
-            id: new Date(),
-          });
+          if (appointment?.complete_status == true) {
+            Toast.show({
+              text1: 'Your appointment status is Completed',
+            });
+            props.addNotification({
+              text: 'Your appointment status is Completed',
+              date: new Date(),
+              id: new Date(),
+            });
+          }
         }
       });
 

@@ -60,9 +60,7 @@ function* getCategorySaga({payload}) {
 
 function* bookAppointmentSaga({payload}) {
   try {
-    let db_ref = yield database().ref(
-      '/DoctorApp/appointments/' + payload.uid + '/' + payload.id,
-    );
+    let db_ref = yield database().ref('/DoctorApp/appointments/' + payload.id);
     yield db_ref
       .set({...payload})
       .then(() => {
@@ -117,7 +115,7 @@ function* getDoctorSaga({payload}) {
 function* getAppointmentSaga({payload}) {
   try {
     let appointments = [];
-    let db_ref = database().ref('/DoctorApp/appointments/' + payload);
+    let db_ref = database().ref('/DoctorApp/appointments/');
 
     yield db_ref.once('value').then(snapshot => {
       snapshot.forEach(child => {

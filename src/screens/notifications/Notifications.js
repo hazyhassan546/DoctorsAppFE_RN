@@ -22,6 +22,9 @@ class Notification extends Component {
   renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
+      onPress={()=>{
+        this.props.navigation.navigate("History")
+      }}
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
